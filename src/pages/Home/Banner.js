@@ -2,37 +2,37 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Banner = () => {
-    return (
+	return (
 		<section
 			class={`relative bg-header-banner bg-cover bg-center bg-no-repeat`}
 		>
-			<div class='absolute inset-0 bg-white/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-white/95 sm:to-white/25'></div>
+			<div className='absolute inset-0 bg-white/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-white/95 sm:to-white/25'></div>
 
-			<div class='relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8'>
-				<div class='max-w-xl text-center sm:text-left'>
-					<h1 class='text-3xl font-extrabold sm:text-5xl'>
+			<div className='relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8'>
+				<div className='max-w-xl text-center sm:text-left'>
+					<h1 className='text-3xl font-extrabold sm:text-5xl'>
 						Store Your Moments
-						<strong class='block font-extrabold text-rose-700'>
+						<strong className='block font-extrabold text-rose-700'>
 							Just One Click!
 						</strong>
 					</h1>
 
-					<p class='mt-4 max-w-lg sm:text-xl sm:leading-relaxed'>
+					<p className='mt-4 max-w-lg sm:text-xl sm:leading-relaxed'>
 						Lorem ipsum dolor sit amet consectetur, adipisicing
 						elit. Nesciunt illo tenetur fuga ducimus numquam ea!
 					</p>
 
-					<div class='mt-8 flex flex-wrap gap-4 text-center'>
+					<div className='mt-8 flex flex-wrap gap-4 text-center'>
 						<Link
 							to='/'
-							class='block w-full btn btn-primary rounded px-12 py-3 text-sm font-medium text-white shadow focus:outline-none sm:w-auto'
+							className='block w-full btn btn-primary rounded px-12 py-3 text-sm font-medium text-white shadow focus:outline-none sm:w-auto'
 						>
 							Get Started
 						</Link>
 
 						<a
 							href='#'
-							class='block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto'
+							className='block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto'
 						>
 							Learn More
 						</a>

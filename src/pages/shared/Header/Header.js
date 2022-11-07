@@ -2,17 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
-    const menuList = <>
-        <li>
-            <Link to='/'>Home</Link>
-    </li>
-        <li>
-            <Link to='/my-review'>My Review</Link>
-    </li>
-        <li>
-            <Link to='/my-review'>Add Services</Link>
-    </li>
-    </>
+	const menuList = (
+		<>
+			<li>
+				<Link to='/'>Home</Link>
+			</li>
+			<li>
+				<Link to='/my-review'>My Review</Link>
+			</li>
+			<li>
+				<Link to='/my-review'>Add Services</Link>
+			</li>
+		</>
+	);
 	return (
 		<div className='navbar bg-base-100'>
 			<div className='navbar-start'>
@@ -43,30 +45,28 @@ const Header = () => {
 				<a className='btn btn-ghost normal-case text-xl'>daisyUI</a>
 			</div>
 			<div className='navbar-center hidden lg:flex'>
-				<ul className='menu menu-horizontal p-0'>
-					{menuList}
-				</ul>
+				<ul className='menu menu-horizontal p-0'>{menuList}</ul>
 			</div>
 			<div className='navbar-end'>
 				{/* <a className='btn'>Get started</a> */}
 				<div className='dropdown dropdown-end'>
 					<button
 						type='button'
-						class='group flex shrink-0 items-center rounded-lg transition'
+						className='group flex shrink-0 items-center rounded-lg transition'
 					>
-						<span class='sr-only'>Menu</span>
+						<span className='sr-only'>Menu</span>
 						<img
 							alt='Man'
 							src='https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-							class='h-10 w-10 rounded-full object-cover'
+							className='h-10 w-10 rounded-full object-cover'
 						/>
 
-						<p class='ml-2 hidden text-left text-xs sm:block'>
-							<strong class='block font-medium'>
+						<p className='ml-2 hidden text-left text-xs sm:block'>
+							<strong className='block font-medium'>
 								Eric Frusciante
 							</strong>
 
-							<span class='text-gray-500'>
+							<span className='text-gray-500'>
 								{' '}
 								eric@frusciante.com{' '}
 							</span>
@@ -74,7 +74,7 @@ const Header = () => {
 
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
-							class='ml-4 hidden h-5 w-5 text-gray-500 transition group-hover:text-gray-700 sm:block'
+							className='ml-4 hidden h-5 w-5 text-gray-500 transition group-hover:text-gray-700 sm:block'
 							viewBox='0 0 20 20'
 							fill='currentColor'
 						>
