@@ -1,15 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import registrationImg from '../../assets/images/person.jpg';
+import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 
 const Registration = () => {
-    const {
+	const { createUser, updateUserProfile } = useContext(AuthContext);
+	const {
 		register,
 		handleSubmit,
-		watch,
 		formState: { errors },
 	} = useForm();
-	const onSubmit = (data) => console.log(data);
+	const onSubmit = (data) => {
+		const { email, password, name, photoURL } = data;
+		handleCreateUser(email, password, name, photoURL);
+	};
+	const handleCreateUser = (email, password, name, photoURL) => {
+		createUser(email, password)
+			.then((res) => {
+				const user = res.user;
+				handleUpdateUserProfile(name, photoURL);
+				toast.success('Registration Success');
+			})
+			.catch((err) => toast.error(err.message));
+	};
+	const handleUpdateUserProfile = (name, photoURL) => {
+		const profileData = {
+			name,
+			photoURL,
+		};
+		updateUserProfile(profileData)
+			.then(() => {})
+			.catch((err) => toast.error(err.message));
+	};
 	return (
 		<section className='bg-white'>
 			<div className='lg:grid lg:min-h-screen lg:grid-cols-12'>
@@ -128,7 +151,9 @@ const Registration = () => {
 							</label>
 							<div className='form-control'>
 								<label className='label'>
-									<span className='label-text'>Photo URL</span>
+									<span className='label-text'>
+										Photo URL
+									</span>
 								</label>
 								<input
 									type='text'
