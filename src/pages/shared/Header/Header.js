@@ -1,7 +1,19 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
-    return (
+    const menuList = <>
+        <li>
+            <Link to='/'>Home</Link>
+    </li>
+        <li>
+            <Link to='/my-review'>My Review</Link>
+    </li>
+        <li>
+            <Link to='/my-review'>Add Services</Link>
+    </li>
+    </>
+	return (
 		<div className='navbar bg-base-100'>
 			<div className='navbar-start'>
 				<div className='dropdown'>
@@ -25,93 +37,60 @@ const Header = () => {
 						tabIndex={0}
 						className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52'
 					>
-						<li>
-							<a>Item 1</a>
-						</li>
-						<li tabIndex={0}>
-							<a className='justify-between'>
-								Parent
-								<svg
-									className='fill-current'
-									xmlns='http://www.w3.org/2000/svg'
-									width='24'
-									height='24'
-									viewBox='0 0 24 24'
-								>
-									<path d='M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z' />
-								</svg>
-							</a>
-							<ul className='p-2'>
-								<li>
-									<a>Submenu 1</a>
-								</li>
-								<li>
-									<a>Submenu 2</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a>Item 3</a>
-						</li>
+						{menuList}
 					</ul>
 				</div>
 				<a className='btn btn-ghost normal-case text-xl'>daisyUI</a>
 			</div>
 			<div className='navbar-center hidden lg:flex'>
 				<ul className='menu menu-horizontal p-0'>
-					<li>
-						<a>Item 1</a>
-					</li>
-					<li tabIndex={0}>
-						<a>
-							Parent
-							<svg
-								className='fill-current'
-								xmlns='http://www.w3.org/2000/svg'
-								width='20'
-								height='20'
-								viewBox='0 0 24 24'
-							>
-								<path d='M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z' />
-							</svg>
-						</a>
-						<ul className='p-2'>
-							<li>
-								<a>Submenu 1</a>
-							</li>
-							<li>
-								<a>Submenu 2</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a>Item 3</a>
-					</li>
+					{menuList}
 				</ul>
 			</div>
 			<div className='navbar-end'>
 				{/* <a className='btn'>Get started</a> */}
 				<div className='dropdown dropdown-end'>
-					<label
-						tabIndex={0}
-						className='btn btn-ghost btn-circle avatar'
+					<button
+						type='button'
+						class='group flex shrink-0 items-center rounded-lg transition'
 					>
-						<div className='w-10 rounded-full'>
-							<img src='https://placeimg.com/80/80/people' />
-						</div>
-					</label>
+						<span class='sr-only'>Menu</span>
+						<img
+							alt='Man'
+							src='https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+							class='h-10 w-10 rounded-full object-cover'
+						/>
+
+						<p class='ml-2 hidden text-left text-xs sm:block'>
+							<strong class='block font-medium'>
+								Eric Frusciante
+							</strong>
+
+							<span class='text-gray-500'>
+								{' '}
+								eric@frusciante.com{' '}
+							</span>
+						</p>
+
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							class='ml-4 hidden h-5 w-5 text-gray-500 transition group-hover:text-gray-700 sm:block'
+							viewBox='0 0 20 20'
+							fill='currentColor'
+						>
+							<path
+								fill-rule='evenodd'
+								d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+								clip-rule='evenodd'
+							/>
+						</svg>
+					</button>
 					<ul
 						tabIndex={0}
-						className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52'
+						className='menu menu-compact dropdown-content mt-4 p-2 shadow bg-base-100 rounded-md w-52'
 					>
 						<li>
-							<a className='justify-between'>
-								Profile
-								<span className='badge'>New</span>
-							</a>
-						</li>
-						<li>
-							<a>Settings</a>
+							<a>Account</a>
 						</li>
 						<li>
 							<a>Logout</a>
