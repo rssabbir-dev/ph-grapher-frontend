@@ -1,33 +1,32 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const ServiceCard = () => {
+const ServiceCard = ({ service }) => {
+    const { _id, title, img, description, price } = service;
     return (
-		<div class='relative bg-[url(https://images.unsplash.com/photo-1550291652-6ea9114a47b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80)] bg-cover bg-center bg-no-repeat px-4 pb-4 pt-56 sm:px-6 sm:pb-6 sm:pt-64'>
-			<span class='absolute inset-0 bg-gray-900/25'></span>
+		<div
+			class='relative bg-cover bg-center bg-no-repeat px-4 pb-4 pt-56 sm:px-6 sm:pb-6 sm:pt-64'
+			style={{ backgroundImage: `url(${img})` }}
+		>
+			<span class='absolute inset-0 bg-gradient-to-t from-black to-transparent'></span>
 
-			<strong class='absolute top-4 left-0 bg-red-600 py-1.5 px-3 text-xs uppercase tracking-wider text-white'>
+			<strong class='absolute top-4 left-0 bg-primary py-1.5 px-3 text-xs uppercase tracking-wider text-white'>
 				New
 			</strong>
 
-			<div class='relative text-center'>
+			<div class='relative text-center flex flex-col justify-between h-full'>
 				<h3 class='text-2xl font-bold uppercase tracking-wider text-white sm:text-3xl'>
-					Save
-					<span class='relative inline-block before:absolute before:inset-x-0 before:bottom-0.5 before:h-2 before:bg-red-600'>
-						<span class='relative'> 10% </span>
-					</span>
-					on Teles
+					{title}
 				</h3>
 
-				<p class='mt-1 text-white/95'>
-					1951-2022. Unchanged. Unmatched.
-				</p>
+				<p class='mt-1 text-white/95'>{description.slice(0, 100)}...</p>
 
-				<a
-					href='#'
-					class='mt-6 block bg-red-600 px-12 py-3 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-700 focus:outline-none focus:ring'
+				<Link
+					to='/'
+					class='mt-6 block btn btn-primary  px-12 py-3 text-sm font-bold uppercase tracking-wider text-white transition focus:outline-none '
 				>
-					Shop Teles Now
-				</a>
+					Details
+				</Link>
 			</div>
 		</div>
 	);

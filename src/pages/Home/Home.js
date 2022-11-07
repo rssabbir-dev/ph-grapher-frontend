@@ -1,10 +1,12 @@
 import React from 'react';
+import Services from '../Services/Services';
 import Banner from './Banner';
 
 const Home = () => {
     return (
-        <div>
-            <Banner/>
+        <div className='space-y-10'>
+            <Banner />
+            <Services/>
         </div>
     );
 };
