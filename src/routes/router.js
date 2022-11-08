@@ -5,7 +5,9 @@ import Home from '../pages/Home/Home';
 import Login from '../pages/LoginManager/Login';
 import Registration from '../pages/LoginManager/Registration';
 import ServiceDetails from '../pages/ServiceDetails/ServiceDetails';
+import Services from '../pages/Services/Services';
 
+export const serverURL = 'http://localhost:5000';
 export const router = createBrowserRouter([
 	{
 		path: '/',
@@ -18,6 +20,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/service/:id',
 				element: <ServiceDetails />,
+			},
+			{
+				path: '/services',
+				element: <Services />,
 			},
 		],
 	},

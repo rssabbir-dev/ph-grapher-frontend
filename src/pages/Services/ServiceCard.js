@@ -5,10 +5,10 @@ const ServiceCard = ({ service }) => {
 	const { _id, title, img, description, price } = service;
 	return (
 		<div
-			className='relative bg-cover bg-center bg-no-repeat px-4 pb-4 pt-56 sm:px-6 sm:pb-6 sm:pt-64'
+			className='relative bg-cover bg-center bg-no-repeat px-4 pb-4 pt-56 sm:px-6 sm:pb-6 sm:pt-64 rounded-md h-full'
 			style={{ backgroundImage: `url(${img})` }}
 		>
-			<span className='absolute inset-0 bg-gradient-to-t from-black to-transparent'></span>
+			<span className='absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-md border'></span>
 
 			<strong className='absolute top-4 left-0 bg-primary py-1.5 px-3 text-xs uppercase tracking-wider text-white'>
 				New

@@ -1,12 +1,12 @@
 import React from 'react';
-import Services from '../Services/Services';
+import ServiceSlider from '../Services/ServiceSlider';
 import Banner from './Banner';
 
 const Home = () => {
     return (
         <div className='space-y-10'>
             <Banner />
-            <Services/>
+            <ServiceSlider/>
         </div>
     );
 };

@@ -4,7 +4,7 @@ import Footer from '../pages/shared/Footer/Footer';
 import Header from '../pages/shared/Header/Header';
 
 const Main = () => {
-    return (
+	return (
 		<div>
 			<Header />
 			<div className='space-y-20'>
