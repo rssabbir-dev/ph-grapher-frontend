@@ -1,8 +1,56 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 
 const ReviewSection = () => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
+	const onSubmit = (data) => {
+		const { email, name } = data;
+		const modal = document.getElementById('my-modal');
+	};
 	return (
 		<section>
+			{/* Review Modal */}
+
+			{/* Put this part before </body> tag */}
+			<input type='checkbox' id='my-modal' className='modal-toggle' />
+			<div className='modal'>
+				<form onSubmit={handleSubmit(onSubmit)} className='modal-box'>
+					<h3 className='font-bold text-lg'>
+						Congratulations random Internet user!
+					</h3>
+					<div className='form-control'>
+						<label className='label'>
+							<span className='label-text'>Name</span>
+						</label>
+						<input
+							type='text'
+							placeholder='name'
+							className='input input-bordered'
+							{...register('name', {
+								required: true,
+							})}
+						/>
+					</div>
+					<label className='label'>
+						{errors.name && (
+							<span className='label-text-alt'>
+								This field is required
+							</span>
+						)}
+					</label>
+					<div className='modal-action'>
+						<label htmlFor='my-modal' className='btn'>
+							Close
+						</label>
+						<button className='btn btn-primary'>Submit</button>
+					</div>
+				</form>
+			</div>
+			{/* Review Modal */}
 			<div className='mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8'>
 				<h2 className='text-xl font-bold sm:text-2xl'>
 					Customer Reviews
@@ -68,9 +116,9 @@ const ReviewSection = () => {
 						</div>
 					</div>
 					<div>
-						<button className='btn btn-primary'>
+						<label htmlFor='my-modal' className='btn btn-primary'>
 							Write A Review
-						</button>
+						</label>
 					</div>
 				</div>
 

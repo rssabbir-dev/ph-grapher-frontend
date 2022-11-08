@@ -37,7 +37,7 @@ const ServiceSlider = () => {
 				},
 			}}
 			modules={[Pagination]}
-			className='grid h-full w-11/12 mx-auto'
+			className='grid h-full'
 		>
 			{services.map((service) => (
 				<SwiperSlide key={service._id}>
