@@ -7,16 +7,24 @@ import { serverURL } from '../../routes/router';
 import ReviewItem from './ReviewItem';
 
 const ReviewSection = ({ service }) => {
-	const params = useParams()
+	const params = useParams();
 	const { user } = useContext(AuthContext);
-	const [reviews, setReviews] = useState([])
+	const [reviews, setReviews] = useState([]);
 	const [count, setCount] = useState(0);
-	const [reloadData,setReloadData] = useState(0)
+	const [reloadData, setReloadData] = useState(0);
+	const [rating, setRating] = useState(4);
+
+	const sum = reviews.reduce((pre, cur) => pre + cur.user_rating, 0);
+
+	let average = 0;
+	if (!isNaN(sum / count)) {
+		average = (sum / count)
+	}
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-		reset
+		reset,
 	} = useForm();
 	const onSubmit = (data) => {
 		const { user_review } = data;
@@ -27,7 +35,7 @@ const ReviewSection = ({ service }) => {
 			user_uid: user.uid,
 			user_photo: user.photoURL,
 			user_review: user_review,
-			user_rating: 4,
+			user_rating: rating + 1,
 			service_name: service.title,
 			service_id: service._id,
 			service_photo: service.img,
@@ -44,21 +52,20 @@ const ReviewSection = ({ service }) => {
 			.then((data) => {
 				if (data.acknowledged) {
 					modal.checked = false;
-					toast.success('Review posted')
-					reset()
-					setReloadData(reloadData+1)
+					toast.success('Review posted');
+					reset();
+					setReloadData(reloadData + 1);
 				}
-				console.log(data);
 			});
 	};
 	useEffect(() => {
 		fetch(`${serverURL}/reviews?service_id=${params.id}`)
-		.then(res => res.json())
-			.then(data => {
-				setReviews(data.reviews)
-				setCount(data.count)
-		})
-	},[params.id,reloadData])
+			.then((res) => res.json())
+			.then((data) => {
+				setReviews(data.reviews);
+				setCount(data.count);
+			});
+	}, [params.id, reloadData]);
 	return (
 		<section>
 			{/* Review Modal */}
@@ -71,6 +78,31 @@ const ReviewSection = ({ service }) => {
 						<div>
 							<h3 className='font-bold text-lg'>Add a review</h3>
 
+							<div className='form-control'>
+								<div>
+									<p className='text-sm font-semibold'>
+										Rating Star: {rating + 1}
+									</p>
+									<div className='-ml-1 flex'>
+										{[...Array(5).keys()].map((rate) => (
+											<svg
+												key={rate}
+												className={
+													rate <= rating
+														? 'text-yellow-400 h-5 w-5'
+														: 'text-gray-300 h-5 w-5'
+												}
+												onClick={() => setRating(rate)}
+												xmlns='http://www.w3.org/2000/svg'
+												viewBox='0 0 20 20'
+												fill='currentColor'
+											>
+												<path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
+											</svg>
+										))}
+									</div>
+								</div>
+							</div>
 							<div className='form-control'>
 								<textarea
 									placeholder='Describe you feedback'
@@ -126,7 +158,7 @@ const ReviewSection = ({ service }) => {
 				<div className='flex justify-between items-center'>
 					<div className='mt-4 flex items-center'>
 						<p className='text-3xl font-medium'>
-							3.8
+							{(average).toFixed(1)}
 							<span className='sr-only'>
 								{' '}
 								Average review score{' '}
@@ -135,46 +167,21 @@ const ReviewSection = ({ service }) => {
 
 						<div className='ml-4'>
 							<div className='-ml-1 flex'>
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									className='h-5 w-5 text-yellow-400'
-									viewBox='0 0 20 20'
-									fill='currentColor'
-								>
-									<path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-								</svg>
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									className='h-5 w-5 text-yellow-400'
-									viewBox='0 0 20 20'
-									fill='currentColor'
-								>
-									<path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-								</svg>
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									className='h-5 w-5 text-yellow-400'
-									viewBox='0 0 20 20'
-									fill='currentColor'
-								>
-									<path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-								</svg>
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									className='h-5 w-5 text-yellow-400'
-									viewBox='0 0 20 20'
-									fill='currentColor'
-								>
-									<path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-								</svg>
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									className='h-5 w-5 text-gray-200'
-									viewBox='0 0 20 20'
-									fill='currentColor'
-								>
-									<path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-								</svg>
+								{[...Array(5).keys()].map((rate) => (
+									<svg
+										key={rate}
+										className={
+											Math.ceil(average) <= rate
+												? 'text-gray-300 h-5 w-5'
+												: 'text-yellow-400 h-5 w-5'
+										}
+										xmlns='http://www.w3.org/2000/svg'
+										viewBox='0 0 20 20'
+										fill='currentColor'
+									>
+										<path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
+									</svg>
+								))}
 							</div>
 
 							<p className='mt-0.5 text-xs text-gray-500'>
@@ -190,9 +197,9 @@ const ReviewSection = ({ service }) => {
 				</div>
 
 				<div className='mt-8 grid grid-cols-1 gap-x-16 gap-y-12 lg:grid-cols-2'>
-					{
-						reviews.map(review => <ReviewItem key={review._id} review={review}/>)
-					}
+					{reviews.map((review) => (
+						<ReviewItem key={review._id} review={review} />
+					))}
 				</div>
 			</div>
 		</section>

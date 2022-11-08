@@ -60,7 +60,7 @@ const ServiceDetails = () => {
 								</summary>
 							</details>
 
-							<form className='mt-8'>
+							<div className='mt-8'>
 								<fieldset className='mt-4'>
 									<legend className='mb-1 text-sm font-medium'>
 										Days
@@ -79,7 +79,7 @@ const ServiceDetails = () => {
 															)
 														}
 													>
-														<input className='peer sr-only' />
+														<input className='peer sr-only' readOnly />
 
 														<span
 															className={`group inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-medium ${number+1 === quantity && 'bg-primary text-white'}`}
@@ -103,7 +103,7 @@ const ServiceDetails = () => {
 										Book Now
 									</button>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
 				</div>
