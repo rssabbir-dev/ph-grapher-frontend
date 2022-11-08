@@ -9,6 +9,7 @@ const Header = () => {
 		logOut()
 			.then(() => {
 				toast.success('Logout');
+				localStorage.removeItem('ph-token')
 			})
 			.catch((err) => toast.err(err.message));
 	};

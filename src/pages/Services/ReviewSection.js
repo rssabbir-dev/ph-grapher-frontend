@@ -83,14 +83,14 @@ const ReviewSection = ({ service }) => {
 									<p className='text-sm font-semibold'>
 										Rating Star: {rating + 1}
 									</p>
-									<div className='-ml-1 flex'>
+									<div className='-ml-1 flex my-2'>
 										{[...Array(5).keys()].map((rate) => (
 											<svg
 												key={rate}
 												className={
 													rate <= rating
-														? 'text-yellow-400 h-5 w-5'
-														: 'text-gray-300 h-5 w-5'
+														? 'text-yellow-400 h-6 w-6'
+														: 'text-gray-300 h-6 w-6'
 												}
 												onClick={() => setRating(rate)}
 												xmlns='http://www.w3.org/2000/svg'
@@ -103,10 +103,12 @@ const ReviewSection = ({ service }) => {
 									</div>
 								</div>
 							</div>
-							<div className='form-control'>
+							<div className='form-control space-y-3'>
+								<input className='input input-bordered' disabled type="text" defaultValue={user?.displayName} />
+								<input className='input input-bordered' disabled type="email" defaultValue={user?.email} />
 								<textarea
 									placeholder='Describe you feedback'
-									className='textarea textarea-bordered mt-3'
+									className='textarea textarea-bordered'
 									{...register('user_review', {
 										required: true,
 									})}
@@ -196,7 +198,7 @@ const ReviewSection = ({ service }) => {
 					</div>
 				</div>
 
-				<div className='mt-8 grid grid-cols-1 gap-x-16 gap-y-12 lg:grid-cols-2'>
+				<div className='mt-8 grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-2'>
 					{reviews.map((review) => (
 						<ReviewItem key={review._id} review={review} />
 					))}

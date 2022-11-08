@@ -1,9 +1,9 @@
 import React from 'react';
 
 const ReviewItem = ({ review }) => {
-	const { user_name, user_photo, user_email,user_rating } = review;
+	const { user_name, user_photo, user_email,user_rating,user_review } = review;
 	return (
-		<blockquote>
+		<blockquote className='border border-gray-100 shadow-sm p-5 rounded-md'>
 			<header className='sm:flex sm:items-center'>
 				<div className='group flex shrink-0 items-center rounded-lg transition'>
 					<img
@@ -22,10 +22,7 @@ const ReviewItem = ({ review }) => {
 			</header>
 
 			<p className='mt-2 text-gray-700'>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam
-				possimus fuga dolor rerum dicta, ipsum laboriosam est totam
-				iusto alias incidunt cum tempore aliquid aliquam error quisquam
-				ipsam asperiores! Iste?
+				{user_review}
 			</p>
 
 			<footer className='mt-4'>
