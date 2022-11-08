@@ -22,7 +22,7 @@ const Registration = () => {
 	const handleCreateUser = (email, password, name, photoURL) => {
 		createUser(email, password)
 			.then((res) => {
-				const user = res.user;
+				// const user = res.user;
 				handleUpdateUserProfile(name, photoURL);
 				toast.success('Registration Success');
 			})

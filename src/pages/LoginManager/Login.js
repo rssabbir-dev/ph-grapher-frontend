@@ -24,7 +24,7 @@ const Registration = () => {
 	const handleLoginUser = (email, password) => {
 		loginUser(email, password)
 			.then((res) => {
-				const user = res.user;
+				// const user = res.user;
 				toast.success('Login Success');
 				navigate(from, { replace: true });
 			})

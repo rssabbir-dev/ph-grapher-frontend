@@ -52,7 +52,7 @@ const Header = () => {
 						{menuList}
 					</ul>
 				</div>
-				<a className='btn btn-ghost normal-case text-xl'>daisyUI</a>
+				<Link to='/' className='btn btn-ghost normal-case text-xl'>daisyUI</Link>
 			</div>
 			<div className='navbar-center hidden lg:flex'>
 				<ul className='menu menu-horizontal p-0'>{menuList}</ul>
@@ -100,7 +100,7 @@ const Header = () => {
 							className='menu menu-compact dropdown-content mt-4 p-2 shadow bg-base-100 rounded-md w-52'
 						>
 							<li>
-								<a>Account</a>
+								<Link to='/account'>Account</Link>
 							</li>
 							<li>
 								<button onClick={handleLogout}>Logout</button>
