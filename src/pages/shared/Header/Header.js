@@ -1,9 +1,17 @@
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 
 const Header = () => {
-    const {user} = useContext(AuthContext)
+	const { user ,logOut} = useContext(AuthContext)
+	const handleLogout = () => {
+		logOut()
+			.then(() => {
+			toast.success('Logout')
+			})
+		.catch(err => toast.err(err.message))
+	}
 	const menuList = (
 		<>
 			<li>
@@ -59,18 +67,18 @@ const Header = () => {
 							<span className='sr-only'>Menu</span>
 							<img
 								alt='Man'
-								src='https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+								src={user?.photoURL}
 								className='h-10 w-10 rounded-full object-cover'
 							/>
 
 							<p className='ml-2 hidden text-left text-xs sm:block'>
 								<strong className='block font-medium'>
-									Eric Frusciante
+									{user?.displayName}
 								</strong>
 
 								<span className='text-gray-500'>
 									{' '}
-									eric@frusciante.com{' '}
+									{user?.email}{' '}
 								</span>
 							</p>
 
@@ -95,7 +103,7 @@ const Header = () => {
 								<a>Account</a>
 							</li>
 							<li>
-								<a>Logout</a>
+								<button onClick={handleLogout}>Logout</button>
 							</li>
 						</ul>
 					</div>
