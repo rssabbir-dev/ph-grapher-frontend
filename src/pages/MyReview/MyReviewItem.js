@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyReviewItem = ({ review }) => {
+const MyReviewItem = ({ review,handleDelete,handleUpdate }) => {
 	const timeConvert = (time) => {
 		// Check correct time format and split into components
 		time = time
@@ -15,13 +15,14 @@ const MyReviewItem = ({ review }) => {
 		}
 		return time.join(''); // return adjusted time or original string
 	};
-	const {
+    const {
+        _id,
 		user_name,
 		user_email,
 		createAt,
 		user_review,
 		service_name,
-		service_photo,
+        service_photo,
 	} = review;
 	const date = new Date(createAt).toString().split(' ');
 
@@ -67,10 +68,10 @@ const MyReviewItem = ({ review }) => {
 				</div>
 
 				<div className='flex sm:items-end sm:justify-end'>
-					<button className='block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400'>
+					<button onClick={()=>handleUpdate(_id)} className='block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400'>
 						Update
 					</button>
-					<button className='block btn-primary px-5 py-3 text-center text-xs font-bold uppercase'>
+					<button onClick={()=>handleDelete(_id)} className='block btn-primary px-5 py-3 text-center text-xs font-bold uppercase'>
 						Delete
 					</button>
 				</div>
