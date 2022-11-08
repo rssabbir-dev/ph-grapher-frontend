@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { serverURL } from '../../routes/router';
 import ReviewItem from './ReviewItem';
 
 const ReviewSection = ({ service }) => {
+	const params = useParams()
 	const { user } = useContext(AuthContext);
-	const [reviews,setReviews] = useState([])
+	const [reviews, setReviews] = useState([])
+	const [count,setCount] = useState(0)
 	const {
 		register,
 		handleSubmit,
@@ -46,12 +48,13 @@ const ReviewSection = ({ service }) => {
 			});
 	};
 	useEffect(() => {
-		fetch(`${serverURL}/reviews`)
+		fetch(`${serverURL}/reviews?service_id=${params.id}`)
 		.then(res => res.json())
 			.then(data => {
-			setReviews(data.reviews)
+				setReviews(data.reviews)
+				setCount(data.count)
 		})
-	},[])
+	},[params.id])
 	return (
 		<section>
 			{/* Review Modal */}
@@ -171,7 +174,7 @@ const ReviewSection = ({ service }) => {
 							</div>
 
 							<p className='mt-0.5 text-xs text-gray-500'>
-								Based on 48 reviews
+								Based on {count} reviews
 							</p>
 						</div>
 					</div>
