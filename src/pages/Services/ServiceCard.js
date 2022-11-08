@@ -24,7 +24,7 @@ const ServiceCard = ({ service }) => {
 				</p>
 
 				<Link
-					to={`service/${_id}`}
+					to={`/service/${_id}`}
 					className='mt-6 block btn btn-primary  px-12 py-3 text-sm font-bold uppercase tracking-wider text-white transition focus:outline-none '
 				>
 					Details

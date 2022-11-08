@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import registrationImg from '../../assets/images/person.jpg';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import { serverURL } from '../../routes/router';
 
 const Registration = () => {
 	const navigate = useNavigate();
@@ -24,12 +25,27 @@ const Registration = () => {
 	const handleLoginUser = (email, password) => {
 		loginUser(email, password)
 			.then((res) => {
-				// const user = res.user;
+				const user = res.user;
 				toast.success('Login Success');
+				handleJwtToken(user)
 				navigate(from, { replace: true });
 			})
 			.catch((err) => toast.error(err.message));
 	};
+	const handleJwtToken = (user) => {
+		const currentUser = { uid: user?.uid };
+		fetch(`${serverURL}/jwt`, {
+			method: 'POST',
+			headers: {
+				'content-type':'application/json'
+			},
+			body:JSON.stringify(currentUser)
+		})
+			.then(res => res.json())
+			.then(token => {
+			localStorage.setItem('ph-token',token.token)
+		})
+	}
 	return (
 		<section className='bg-white'>
 			<div className='lg:grid lg:min-h-screen lg:grid-cols-12'>

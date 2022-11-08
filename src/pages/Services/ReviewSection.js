@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { serverURL } from '../../routes/router';
@@ -9,7 +10,8 @@ const ReviewSection = ({ service }) => {
 	const params = useParams()
 	const { user } = useContext(AuthContext);
 	const [reviews, setReviews] = useState([])
-	const [count,setCount] = useState(0)
+	const [count, setCount] = useState(0);
+	const [reloadData,setReloadData] = useState(0)
 	const {
 		register,
 		handleSubmit,
@@ -29,7 +31,7 @@ const ReviewSection = ({ service }) => {
 			service_name: service.title,
 			service_id: service._id,
 			service_photo: service.img,
-			post_date: new Date(),
+			createAt: new Date(),
 		};
 		fetch(`${serverURL}/review`, {
 			method: 'POST',
@@ -42,7 +44,9 @@ const ReviewSection = ({ service }) => {
 			.then((data) => {
 				if (data.acknowledged) {
 					modal.checked = false;
+					toast.success('Review posted')
 					reset()
+					setReloadData(reloadData+1)
 				}
 				console.log(data);
 			});
@@ -54,7 +58,7 @@ const ReviewSection = ({ service }) => {
 				setReviews(data.reviews)
 				setCount(data.count)
 		})
-	},[params.id])
+	},[params.id,reloadData])
 	return (
 		<section>
 			{/* Review Modal */}
