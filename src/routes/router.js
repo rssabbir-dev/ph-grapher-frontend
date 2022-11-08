@@ -7,7 +7,7 @@ import Registration from '../pages/LoginManager/Registration';
 import ServiceDetails from '../pages/ServiceDetails/ServiceDetails';
 import Services from '../pages/Services/Services';
 
-export const serverURL = 'http://localhost:5000';
+export const serverURL = 'https://ph-grapher-backend.vercel.app';
 export const router = createBrowserRouter([
 	{
 		path: '/',
