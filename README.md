@@ -1,71 +1,78 @@
-# Getting Started with Create React App
+# Ph_Grapher - A Photographer services portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Live Website https://ph-grapher.web.app//
+## Server or API Link https://ph-grapher-backend.vercel.app/
 
-## Available Scripts
+Ph_Grapher is a photographer services portfolio website, user can book schedule the photographer on give review on photographer services
 
-In the project directory, you can run:
+### Few thing about our site
+- A user friendly user interface.
+- A Nice Header Banner
+- Organized Services on service section.
+- User Profile system for update there name and photo.
+- Shortcut login with Google login system.
+- Blog section for share new thing.
+- Have a nice footer section for navigate user where they want to go.
+- Services details page
+- User make services or review on our site
+- User can delete or update their review
+- User can see other review on service details section, but can't update or delete
+- Newsletter Section 
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Technology used in this project
+- HTML
+- Tailwind
+- DaisyUI
+- HyperUI
+- Javascript
+- React
+- Firebase
+- react-router-dom
+- swiperjs
+- react-hot-toast
+- fontawesome
+- react-hook-form
+- react-photo-view
+- sweetAlert2
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#
 
-### `npm test`
+### API Data used in this site
+# Ph_Grapher Server OR API
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Get All Services Data with this api link - GET
+- https://ph-grapher-backend.vercel.app/services?limit={}
 
-### `npm run build`
+### Get Only a user create services list - GET
+- https://ph-grapher-backend.vercel.app/my-service?uid={uid}
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Get a single service by id - GET
+- https://ph-grapher-backend.vercel.app/service/:id
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Get all reviews by service id - GET
+- https://ph-grapher-backend.vercel.app/reviews?service_id={service_id}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Get all reviews created by currentUser by uid - GET
+- https://ph-grapher-backend.vercel.app/my-review?uid={uid}
 
-### `npm run eject`
+### Get all blogs post - GET 
+- https://ph-grapher-backend.vercel.app/blogs
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Get all testimonials - GET
+- https://ph-grapher-backend.vercel.app/testimonials
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Create A Service Data - POST
+- https://ph-grapher-backend.vercel.app/services?uid={uid}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Post A Review - POST
+- https://ph-grapher-backend.vercel.app/review?uid={uid}
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Delete a single review created by currentUser by uid and review id - DELETE
+- https://ph-grapher-backend.vercel.app/my-review-delete?uid={uid}&id={id}
 
-## Learn More
+### Update a single review created by currentUser by uid and review id - PATCH
+- https://ph-grapher-backend.vercel.app/my-review-update?uid={uid}&id={id}
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# b6a11-service-review-client-side-rssabbir-dev
+### Get JWT TOKEN for user authorization - POST
+- https://ph-grapher-backend.vercel.app/jwt
