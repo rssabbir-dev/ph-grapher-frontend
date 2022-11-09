@@ -9,7 +9,6 @@ const Header = () => {
 		logOut()
 			.then(() => {
 				toast.success('Logout');
-				localStorage.removeItem('ph-token')
 			})
 			.catch((err) => toast.err(err.message));
 	};
@@ -21,12 +20,16 @@ const Header = () => {
 			<li>
 				<Link to='/services'>Services</Link>
 			</li>
-			<li>
-				<Link to='/my-review'>My Review</Link>
-			</li>
-			<li>
-				<Link to='/my-review'>Add Services</Link>
-			</li>
+			{user?.uid && (
+				<>
+					<li>
+						<Link to='/my-review'>My Review</Link>
+					</li>
+					<li>
+						<Link to='/my-review'>Add Services</Link>
+					</li>
+				</>
+			)}
 		</>
 	);
 	return (

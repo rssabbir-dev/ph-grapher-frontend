@@ -8,7 +8,7 @@ import { serverURL } from '../../routes/router';
 import MyReviewItem from './MyReviewItem';
 
 const MyReview = () => {
-    const [selectUpdate, setSelectUpdate] = useState({});
+	const [selectUpdate, setSelectUpdate] = useState({});
 	const [reviews, setReviews] = useState([]);
 	const [count, setCount] = useState(0);
 	const { user, logOut } = useContext(AuthContext);
@@ -71,7 +71,6 @@ const MyReview = () => {
 						if (res.status === 401 || res.status === 403) {
 							return logOut().then(() => {
 								toast.error('Session Expired, Login Again');
-								localStorage.removeItem('ph-token');
 								navigate('/login');
 							});
 						}
@@ -92,52 +91,52 @@ const MyReview = () => {
 			}
 		});
 	};
-	
-	const onSubmit = (data) => {
-		const { user_review } = data;
+
+	const onSubmit = async (inputData) => {
+		const { user_review } = inputData;
 		const modal = document.getElementById('my-modal');
 		const review = {
 			user_review: user_review,
 			user_rating: rating + 1,
-        };
-        fetch(`${serverURL}/my-review-update?id=${selectUpdate._id}&uid=${user?.uid}`, {
-			method: 'PATCH',
-            headers: {
-                'content-type':'application/json',
-				authorization: `Bearer ${localStorage.getItem('ph-token')}`,
-            },
-            body:JSON.stringify(review)
-		})
-			.then((res) => {
-				if (res.status === 401 || res.status === 403) {
-					return logOut().then(() => {
-						toast.error('Session Expired, Login Again');
-						localStorage.removeItem('ph-token');
-						navigate('/login');
-					});
-				}
-				return res.json();
-			})
-			.then((data) => {
-                if (data.modifiedCount > 0) {
-                    setReloadData(reloadData + 1)
-                    Swal.fire({
-						title: 'Updated!',
-						text: 'Your Review has been Updated. !',
-						icon: 'success',
-						showCancelButton: false,
-						cancelButtonColor: '#d33',
-					});
-                    modal.checked = false;
-                }
+		};
+		const response = await fetch(
+			`${serverURL}/my-review-update?id=${selectUpdate._id}&uid=${user?.uid}`,
+			{
+				method: 'PATCH',
+				headers: {
+					'content-type': 'application/json',
+					authorization: `Bearer ${localStorage.getItem('ph-token')}`,
+				},
+				body: JSON.stringify(review),
+			}
+		);
+
+		const data = await response.json();
+		if (data.modifiedCount > 0) {
+			setReloadData(reloadData + 1);
+			Swal.fire({
+				title: 'Updated!',
+				text: 'Your Review has been Updated. !',
+				icon: 'success',
+				showCancelButton: false,
+				cancelButtonColor: '#d33',
 			});
+			modal.checked = false;
+		}
+		if (response.status === 401 || response.status === 403) {
+			return logOut().then(() => {
+				toast.error('Session Expired, Login Again');
+				localStorage.removeItem('ph-token');
+				navigate('/login');
+			});
+		}
 	};
 	const handleUpdate = (preReview) => {
 		const modal = document.getElementById('my-modal');
 		modal.checked = true;
-        setSelectUpdate(preReview);
-        setRating(preReview.user_rating-1)
-    };
+		setSelectUpdate(preReview);
+		setRating(preReview.user_rating - 1);
+	};
 	return (
 		<div>
 			{/* Review Modal */}
@@ -176,8 +175,8 @@ const MyReview = () => {
 						</div>
 						<div className='form-control space-y-3'>
 							<textarea
-                                placeholder='Describe you feedback'
-                                value={selectUpdate?.user_review}
+								placeholder='Describe you feedback'
+								value={selectUpdate?.user_review}
 								className='textarea textarea-bordered'
 								{...register('user_review', {
 									required: true,

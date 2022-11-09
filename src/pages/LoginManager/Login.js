@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import registrationImg from '../../assets/images/person.jpg';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { serverURL } from '../../routes/router';
+import ProviderLogin from './ProviderLogin';
 
 const Registration = () => {
 	const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Registration = () => {
 			.then((res) => {
 				const user = res.user;
 				toast.success('Login Success');
-				handleJwtToken(user)
+				handleJwtToken(user);
 				navigate(from, { replace: true });
 			})
 			.catch((err) => toast.error(err.message));
@@ -37,15 +38,15 @@ const Registration = () => {
 		fetch(`${serverURL}/jwt`, {
 			method: 'POST',
 			headers: {
-				'content-type':'application/json'
+				'content-type': 'application/json',
 			},
-			body:JSON.stringify(currentUser)
+			body: JSON.stringify(currentUser),
 		})
-			.then(res => res.json())
-			.then(token => {
-			localStorage.setItem('ph-token',token.token)
-		})
-	}
+			.then((res) => res.json())
+			.then((token) => {
+				localStorage.setItem('ph-token', token.token);
+			});
+	};
 	return (
 		<section className='bg-white'>
 			<div className='lg:grid lg:min-h-screen lg:grid-cols-12'>
@@ -177,6 +178,10 @@ const Registration = () => {
 								</p>
 							</div>
 						</form>
+						<div className='my-3'>
+							<div className='divider text-xl'>OR</div>
+							<ProviderLogin />
+						</div>
 					</div>
 				</main>
 			</div>

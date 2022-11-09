@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { serverURL } from '../../routes/router';
 import ServiceSlider from '../Services/ServiceSlider';
 import Banner from './Banner';
 
 const Home = () => {
+	const [services, setServices] = useState([]);
+	useEffect(() => {
+		fetch(`${serverURL}/services?limit=${3}`)
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data);
+				setServices(data);
+			});
+	}, []);
 	return (
 		<div className='space-y-10'>
 			<Banner />
@@ -14,7 +24,7 @@ const Home = () => {
                 <div className='text-right'>
                     <Link to='/services' className='btn btn-primary btn-sm'>See All</Link>
                 </div>
-				<ServiceSlider />
+				<ServiceSlider services={services} />
 			</div>
 		</div>
 	);

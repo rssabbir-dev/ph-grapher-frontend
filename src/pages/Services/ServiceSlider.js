@@ -9,18 +9,8 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper';
 import ServiceCard from './ServiceCard';
-import { serverURL } from '../../routes/router';
 
-const ServiceSlider = () => {
-	const [services, setServices] = useState([]);
-	useEffect(() => {
-		fetch(`${serverURL}/services?limit=${3}`)
-			.then((res) => res.json())
-			.then((data) => {
-				console.log(data);
-				setServices(data);
-			});
-	}, []);
+const ServiceSlider = ({services}) => {
 	return (
 		<Swiper
 			slidesPerView={1}
