@@ -7,12 +7,14 @@ import Swal from 'sweetalert2';
 import { siteName } from '../../App';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { serverURL } from '../../routes/router';
+import Spinner from '../shared/Spinner/Spinner';
 import MyReviewItem from './MyReviewItem';
 
 const MyReview = () => {
 	const [selectUpdate, setSelectUpdate] = useState({});
 	const [reviews, setReviews] = useState([]);
 	const [count, setCount] = useState(0);
+	const [loading, setLoading] = useState(false);
 	const { user, logOut } = useContext(AuthContext);
 	const [reloadData, setReloadData] = useState(0);
 	const navigate = useNavigate();
@@ -21,10 +23,10 @@ const MyReview = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-		reset,
 	} = useForm();
 
 	useEffect(() => {
+		setLoading(true);
 		fetch(`${serverURL}/my-review?uid=${user?.uid}`, {
 			headers: {
 				authorization: `Bearer ${localStorage.getItem('ph-token')}`,
@@ -41,8 +43,9 @@ const MyReview = () => {
 			.then((data) => {
 				setReviews(data.reviews);
 				setCount(data.count);
+				setLoading(false);
 			});
-	}, [logOut, user?.uid, reloadData]);
+	}, [logOut, user?.uid, reloadData, setLoading]);
 
 	const handleDelete = (id) => {
 		Swal.fire({
@@ -138,94 +141,114 @@ const MyReview = () => {
 		setRating(preReview.user_rating - 1);
 	};
 	return (
-		<div>
+		<div className='min-h-screen'>
 			<Helmet>
 				<title>My Review - {siteName}</title>
 			</Helmet>
 			{/* Review Modal */}
 
 			{/* Put this part before </body> tag */}
-			<input type='checkbox' id='my-modal' className='modal-toggle' />
-			<div className='modal'>
-				<form onSubmit={handleSubmit(onSubmit)} className='modal-box'>
-					<div>
-						<h3 className='font-bold text-lg'>Update review</h3>
-
-						<div className='form-control'>
+			{loading && <Spinner />}
+			{!loading && (
+				<>
+					<input
+						type='checkbox'
+						id='my-modal'
+						className='modal-toggle'
+					/>
+					<div className='modal'>
+						<form
+							onSubmit={handleSubmit(onSubmit)}
+							className='modal-box'
+						>
 							<div>
-								<p className='text-sm font-semibold'>
-									Rating Star: {rating + 1}
-								</p>
-								<div className='-ml-1 flex my-2'>
-									{[...Array(5).keys()].map((rate) => (
-										<svg
-											key={rate}
-											className={
-												rate <= rating
-													? 'text-yellow-400 h-6 w-6'
-													: 'text-gray-300 h-6 w-6'
-											}
-											onClick={() => setRating(rate)}
-											xmlns='http://www.w3.org/2000/svg'
-											viewBox='0 0 20 20'
-											fill='currentColor'
-										>
-											<path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-										</svg>
-									))}
+								<h3 className='font-bold text-lg'>
+									Update review
+								</h3>
+
+								<div className='form-control'>
+									<div>
+										<p className='text-sm font-semibold'>
+											Rating Star: {rating + 1}
+										</p>
+										<div className='-ml-1 flex my-2'>
+											{[...Array(5).keys()].map(
+												(rate) => (
+													<svg
+														key={rate}
+														className={
+															rate <= rating
+																? 'text-yellow-400 h-6 w-6'
+																: 'text-gray-300 h-6 w-6'
+														}
+														onClick={() =>
+															setRating(rate)
+														}
+														xmlns='http://www.w3.org/2000/svg'
+														viewBox='0 0 20 20'
+														fill='currentColor'
+													>
+														<path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
+													</svg>
+												)
+											)}
+										</div>
+									</div>
+								</div>
+								<div className='form-control space-y-3'>
+									<textarea
+										placeholder='Describe you feedback'
+										defaultValue={selectUpdate?.user_review}
+										className='textarea textarea-bordered'
+										{...register('user_review', {
+											required: true,
+										})}
+									/>
+								</div>
+								<label className='label'>
+									{errors.user_review && (
+										<span className='label-text-alt'>
+											This field is required
+										</span>
+									)}
+								</label>
+								<div className='modal-action'>
+									<label htmlFor='my-modal' className='btn'>
+										Close
+									</label>
+									<button className='btn btn-primary'>
+										Submit
+									</button>
 								</div>
 							</div>
-						</div>
-						<div className='form-control space-y-3'>
-							<textarea
-								placeholder='Describe you feedback'
-								defaultValue={selectUpdate?.user_review}
-								className='textarea textarea-bordered'
-								{...register('user_review', {
-									required: true,
-								})}
-							/>
-						</div>
-						<label className='label'>
-							{errors.user_review && (
-								<span className='label-text-alt'>
-									This field is required
-								</span>
+						</form>
+					</div>
+					{/* Review Modal */}
+
+					<div className='w-11/12 mx-auto'>
+						<h2 className='text-3xl uppercase font-light'>
+							You reviewed {count} service
+						</h2>
+						<div className='divider'></div>
+						<div>
+							{count ? (
+								<div className='grid gap-10'>
+									{reviews.map((review) => (
+										<MyReviewItem
+											handleDelete={handleDelete}
+											handleUpdate={handleUpdate}
+											review={review}
+											key={review._id}
+										/>
+									))}
+								</div>
+							) : (
+								<h2>You haven't write a review yet!</h2>
 							)}
-						</label>
-						<div className='modal-action'>
-							<label htmlFor='my-modal' className='btn'>
-								Close
-							</label>
-							<button className='btn btn-primary'>Submit</button>
 						</div>
 					</div>
-				</form>
-			</div>
-			{/* Review Modal */}
-
-			<div className='w-11/12 mx-auto'>
-				<h2 className='text-3xl uppercase font-light'>
-					You reviewed {count} service
-				</h2>
-				<div className='divider'></div>
-				<div>
-					{count ? (
-						<div className='grid gap-10'>
-							{reviews.map((review) => (
-								<MyReviewItem
-									handleDelete={handleDelete}
-									handleUpdate={handleUpdate}
-									review={review}
-									key={review._id}
-								/>
-							))}
-						</div>
-					) : (
-						<h2>You haven't write a review yet!</h2>
-					)}
-				</div>
-			</div>
+				</>
+			)}
 		</div>
 	);
 };

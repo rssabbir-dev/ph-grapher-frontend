@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Banner = () => {
 	return (
 		<section
-			className={`relative bg-header-banner bg-cover bg-center bg-no-repeat`}
+			className={`relative bg-header-banner bg-fixed bg-cover bg-center bg-no-repeat -mt-3`}
 		>
 			<div className='absolute inset-0 bg-white/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-white/95 sm:to-white/25'></div>
 

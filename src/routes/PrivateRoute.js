@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider/AuthProvider';
+import Spinner from '../pages/shared/Spinner/Spinner';
 
 const PrivateRoute = ({ children }) => {
 	const location = useLocation();
 	const { user, loading } = useContext(AuthContext);
 	if (loading) {
-		return <h1 className='text-3xl'>Loading....</h1>;
+		return <Spinner />;
 	}
 	if (!user?.uid) {
 		return (

@@ -5,7 +5,7 @@ import { siteName } from '../../App';
 
 const ErrorPage = () => {
 	return (
-		<div class='grid h-screen place-content-center bg-white'>
+		<div class='grid min-h-screen place-content-center bg-white'>
 			<Helmet>
 				<title>404 Not Found - {siteName}</title>
 			</Helmet>

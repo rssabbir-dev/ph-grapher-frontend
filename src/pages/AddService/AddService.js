@@ -6,12 +6,14 @@ import { siteName } from '../../App';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import auth from '../../firebase/firebase.config';
 import { serverURL } from '../../routes/router';
+import Spinner from '../shared/Spinner/Spinner';
 import MyService from './MyService';
 
 const AddService = () => {
 	const [services, setServices] = useState([]);
 	const [count, setCount] = useState(0);
-	const [reloadData, setReloadData] = useState(0);
+    const [reloadData, setReloadData] = useState(0);
+    const [loading,setLoading] = useState(false)
 	const { user } = useContext(AuthContext);
 	const {
 		register,
@@ -52,7 +54,8 @@ const AddService = () => {
 				}
 			});
 	};
-	useEffect(() => {
+    useEffect(() => {
+        setLoading(true)
 		fetch(`${serverURL}/my-service?uid=${user?.uid}`, {
 			headers: {
 				authorization: `Bearer ${localStorage.getItem('ph-token')}`,
@@ -62,166 +65,170 @@ const AddService = () => {
 			.then((data) => {
 				console.log(data);
 				setServices(data.services);
-				setCount(data.count);
+                setCount(data.count);
+                setLoading(false)
 			});
 	}, [user?.uid, reloadData]);
 	return (
 		<section>
 			<Helmet>
 				<title>Add New Service - {siteName}</title>
-			</Helmet>
-			<div className='mx-auto w-11/12'>
-				<h1 className='text-3xl uppercase font-light'>
-					You Added: {count} Service - Create New
-				</h1>
-				<div className='divider'></div>
-				<div className='flex flex-col-reverse lg:grid gap-x-16 gap-y-8 lg:grid-cols-5'>
-					<div className='lg:col-span-2 lg:py-12 grid gap-5'>
-						{count ? (
-							<div>
-								{services.map((service) => (
-									<MyService
-										key={service._id}
-										service={service}
-									/>
-								))}
-							</div>
-						) : (
-							<div>
-								<h3>You didn't added any service!</h3>
-							</div>
-						)}
-					</div>
-
-					<div className=' lg:col-span-3 lg:p-12'>
-						<form
-							onSubmit={handleSubmit(onSubmit)}
-							className='space-y-4 rounded-lg bg-white p-8 shadow-lg'
-						>
-							<div>
-								<div className='form-control'>
-									<label className='label'>
-										<span className='label-text'>
-											Service Name
-										</span>
-									</label>
-									<input
-										type='text'
-										placeholder='Service Name'
-										className='input input-bordered'
-										{...register('title', {
-											required: true,
-										})}
-									/>
+            </Helmet>
+            {loading && <Spinner/>}
+			{!loading && (
+				<div className='mx-auto w-11/12'>
+					<h1 className='text-3xl uppercase font-light'>
+						You Added: {count} Service - Create New
+					</h1>
+					<div className='divider'></div>
+					<div className='flex flex-col-reverse lg:grid gap-x-16 gap-y-8 lg:grid-cols-5'>
+						<div className='lg:col-span-2 lg:py-12 grid gap-5'>
+							{count ? (
+								<div>
+									{services.map((service) => (
+										<MyService
+											key={service._id}
+											service={service}
+										/>
+									))}
 								</div>
-								<label className='label'>
-									{errors.title && (
-										<span className='label-text-alt'>
-											This field is required
-										</span>
-									)}
-								</label>
-							</div>
+							) : (
+								<div>
+									<h3>You didn't added any service!</h3>
+								</div>
+							)}
+						</div>
 
-							<div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+						<div className=' lg:col-span-3 lg:p-12'>
+							<form
+								onSubmit={handleSubmit(onSubmit)}
+								className='space-y-4 rounded-lg bg-white p-8 shadow-lg'
+							>
 								<div>
 									<div className='form-control'>
 										<label className='label'>
 											<span className='label-text'>
-												Service Photo
+												Service Name
 											</span>
 										</label>
 										<input
 											type='text'
-											placeholder='Service Photo size:1000x600'
+											placeholder='Service Name'
 											className='input input-bordered'
-											{...register('img', {
+											{...register('title', {
 												required: true,
 											})}
 										/>
 									</div>
 									<label className='label'>
-										{errors.img && (
+										{errors.title && (
 											<span className='label-text-alt'>
 												This field is required
 											</span>
 										)}
 									</label>
+								</div>
+
+								<div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+									<div>
+										<div className='form-control'>
+											<label className='label'>
+												<span className='label-text'>
+													Service Photo
+												</span>
+											</label>
+											<input
+												type='text'
+												placeholder='Service Photo size:1000x600'
+												className='input input-bordered'
+												{...register('img', {
+													required: true,
+												})}
+											/>
+										</div>
+										<label className='label'>
+											{errors.img && (
+												<span className='label-text-alt'>
+													This field is required
+												</span>
+											)}
+										</label>
+									</div>
+
+									<div>
+										<div className='form-control'>
+											<label className='label'>
+												<span className='label-text'>
+													Service Price
+												</span>
+											</label>
+											<input
+												type='number'
+												placeholder='Service Price'
+												className='input input-bordered'
+												{...register('price', {
+													required: true,
+												})}
+											/>
+										</div>
+										<label className='label'>
+											{errors.price && (
+												<span className='label-text-alt'>
+													This field is required
+												</span>
+											)}
+										</label>
+									</div>
 								</div>
 
 								<div>
-									<div className='form-control'>
-										<label className='label'>
-											<span className='label-text'>
-												Service Price
-											</span>
-										</label>
-										<input
-											type='number'
-											placeholder='Service Price'
-											className='input input-bordered'
-											{...register('price', {
+									<div className='form-control space-y-3'>
+										<textarea
+											placeholder='Describe service details...'
+											className='textarea textarea-bordered'
+											rows='8'
+											{...register('description', {
 												required: true,
 											})}
 										/>
 									</div>
 									<label className='label'>
-										{errors.price && (
+										{errors.description && (
 											<span className='label-text-alt'>
 												This field is required
 											</span>
 										)}
 									</label>
 								</div>
-							</div>
 
-							<div>
-								<div className='form-control space-y-3'>
-									<textarea
-										placeholder='Describe service details...'
-										className='textarea textarea-bordered'
-										rows='8'
-										{...register('description', {
-											required: true,
-										})}
-									/>
-								</div>
-								<label className='label'>
-									{errors.description && (
-										<span className='label-text-alt'>
-											This field is required
+								<div className='mt-4'>
+									<button className='inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto'>
+										<span className='font-medium'>
+											{' '}
+											Submit{' '}
 										</span>
-									)}
-								</label>
-							</div>
 
-							<div className='mt-4'>
-								<button className='inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto'>
-									<span className='font-medium'>
-										{' '}
-										Submit{' '}
-									</span>
-
-									<svg
-										xmlns='http://www.w3.org/2000/svg'
-										className='ml-3 h-5 w-5'
-										fill='none'
-										viewBox='0 0 24 24'
-										stroke='currentColor'
-									>
-										<path
-											stroke-linecap='round'
-											stroke-linejoin='round'
-											stroke-width='2'
-											d='M14 5l7 7m0 0l-7 7m7-7H3'
-										/>
-									</svg>
-								</button>
-							</div>
-						</form>
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											className='ml-3 h-5 w-5'
+											fill='none'
+											viewBox='0 0 24 24'
+											stroke='currentColor'
+										>
+											<path
+												stroke-linecap='round'
+												stroke-linejoin='round'
+												stroke-width='2'
+												d='M14 5l7 7m0 0l-7 7m7-7H3'
+											/>
+										</svg>
+									</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
-			</div>
+			)}
 		</section>
 	);
 };

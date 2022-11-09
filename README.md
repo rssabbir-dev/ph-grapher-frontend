@@ -35,6 +35,8 @@ Ph_Grapher is a photographer services portfolio website, user can book schedule 
 - react-hook-form
 - react-photo-view
 - sweetAlert2
+- react-helmet
+- react-loader-spinner
 
 #
 
