@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import { siteName } from '../../App';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import auth from '../../firebase/firebase.config';
 import { serverURL } from '../../routes/router';
@@ -65,6 +67,9 @@ const AddService = () => {
 	}, [user?.uid, reloadData]);
 	return (
 		<section>
+			<Helmet>
+				<title>Add New Service - {siteName}</title>
+			</Helmet>
 			<div className='mx-auto w-11/12'>
 				<h1 className='text-3xl uppercase font-light'>
 					You Added: {count} Service - Create New

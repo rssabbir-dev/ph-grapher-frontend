@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
+import logo from '../../../assets/images/logo.png'
+import { siteName } from '../../../App';
 
 const Header = () => {
 	const { user, logOut } = useContext(AuthContext);
@@ -62,8 +64,9 @@ const Header = () => {
 						{menuList}
 					</ul>
 				</div>
-				<Link to='/' className='btn btn-ghost normal-case text-xl'>
-					daisyUI
+				<Link to='/' className='normal-case text-xl font-bold flex justify-center items-center'>
+					<img className='w-10' src={logo} alt="" />
+					<span>{siteName}</span>
 				</Link>
 			</div>
 			<div className='navbar-center hidden lg:flex'>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import { useParams } from 'react-router-dom';
+import { siteName } from '../../App';
 import { serverURL } from '../../routes/router';
 import ReviewSection from '../Services/ReviewSection';
 
@@ -19,6 +21,9 @@ const ServiceDetails = () => {
 
 	return (
 		<>
+			<Helmet>
+				<title>{`${title} - ${siteName}`}</title>
+			</Helmet>
 			<section>
 				<div className='relative mx-auto max-w-screen-xl px-4 py-8'>
 					<div className='grid grid-cols-1 items-start gap-8 md:grid-cols-2'>
@@ -79,10 +84,17 @@ const ServiceDetails = () => {
 															)
 														}
 													>
-														<input className='peer sr-only' readOnly />
+														<input
+															className='peer sr-only'
+															readOnly
+														/>
 
 														<span
-															className={`group inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-medium ${number+1 === quantity && 'bg-primary text-white'}`}
+															className={`group inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-medium ${
+																number + 1 ===
+																	quantity &&
+																'bg-primary text-white'
+															}`}
 														>
 															{number + 1}D
 														</span>
@@ -93,7 +105,7 @@ const ServiceDetails = () => {
 									</div>
 								</fieldset>
 								<div>
-									Total Cost: {price * (quantity*24)} Taka
+									Total Cost: {price * (quantity * 24)} Taka
 								</div>
 								<div className='mt-8 flex'>
 									<button

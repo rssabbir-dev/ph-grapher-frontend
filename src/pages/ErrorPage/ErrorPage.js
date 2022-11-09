@@ -1,9 +1,14 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import { siteName } from '../../App';
 
 const ErrorPage = () => {
 	return (
 		<div class='grid h-screen place-content-center bg-white'>
+			<Helmet>
+				<title>404 Not Found - {siteName}</title>
+			</Helmet>
 			<div class='text-center'>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'

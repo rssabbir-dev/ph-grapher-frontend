@@ -1,9 +1,11 @@
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import { siteName } from '../../App';
 import registrationImg from '../../assets/images/person.jpg';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 
@@ -44,6 +46,9 @@ const Registration = () => {
 	};
 	return (
 		<section className='bg-white'>
+			<Helmet>
+				<title>Registration - {siteName}</title>
+			</Helmet>
 			<div className='lg:grid lg:min-h-screen lg:grid-cols-12'>
 				<section className='relative flex h-32 items-end bg-gradient-to-t from-black to-transparent lg:col-span-5 lg:h-full xl:col-span-6'>
 					<img

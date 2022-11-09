@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import { siteName } from '../../App';
 import { serverURL } from '../../routes/router';
 import ServiceSlider from '../Services/ServiceSlider';
 import Banner from './Banner';
@@ -18,6 +20,9 @@ const Home = () => {
 	}, []);
 	return (
 		<div className='space-y-10'>
+			<Helmet>
+				<title>Home - {siteName}</title>
+			</Helmet>
 			<Banner />
 			<div>
 				<div className='w-11/12 mx-auto space-y-5'>

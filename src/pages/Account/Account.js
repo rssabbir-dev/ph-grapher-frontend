@@ -1,10 +1,15 @@
 import React, { useContext } from 'react';
+import { Helmet } from 'react-helmet';
+import { siteName } from '../../App';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 
 const Account = () => {
 	const { user } = useContext(AuthContext);
 	return (
 		<div className='w-full md:w-2/5 p-8 bg-white lg:ml-4 shadow-md mx-auto'>
+			<Helmet>
+                <title>Account - {siteName}</title>
+			</Helmet>
 			<div>
 				<div className='flex justify-between'>
 					<span className='text-xl font-semibold block'>

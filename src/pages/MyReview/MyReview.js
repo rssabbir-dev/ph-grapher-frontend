@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { siteName } from '../../App';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { serverURL } from '../../routes/router';
 import MyReviewItem from './MyReviewItem';
@@ -137,6 +139,9 @@ const MyReview = () => {
 	};
 	return (
 		<div>
+			<Helmet>
+				<title>My Review - {siteName}</title>
+			</Helmet>
 			{/* Review Modal */}
 
 			{/* Put this part before </body> tag */}
