@@ -8,8 +8,8 @@ import MyService from './MyService';
 
 const AddService = () => {
 	const [services, setServices] = useState([]);
-    const [count, setCount] = useState(0);
-    const [reloadData,setReloadData] = useState(0)
+	const [count, setCount] = useState(0);
+	const [reloadData, setReloadData] = useState(0);
 	const { user } = useContext(AuthContext);
 	const {
 		register,
@@ -45,8 +45,8 @@ const AddService = () => {
 						showCancelButton: false,
 						cancelButtonColor: '#d33',
 					});
-                    reset();
-                    setReloadData(reloadData+1)
+					reset();
+					setReloadData(reloadData + 1);
 				}
 			});
 	};
@@ -62,32 +62,36 @@ const AddService = () => {
 				setServices(data.services);
 				setCount(data.count);
 			});
-	}, [user?.uid,reloadData]);
+	}, [user?.uid, reloadData]);
 	return (
 		<section>
-			<div class='mx-auto w-11/12'>
+			<div className='mx-auto w-11/12'>
 				<h1 className='text-3xl uppercase font-light'>
 					You Added: {count} Service - Create New
 				</h1>
 				<div className='divider'></div>
-				<div class='flex flex-col-reverse lg:grid gap-x-16 gap-y-8 lg:grid-cols-5'>
-					<div class='lg:col-span-2 lg:py-12 grid gap-5'>
-						{count ? <div>
-							{services.map((service) => (
-								<MyService
-									key={service._id}
-									service={service}
-								/>
-							))}
-                        </div> : <div>
-                        <h3>You didn't added any service!</h3>
-                        </div>}
+				<div className='flex flex-col-reverse lg:grid gap-x-16 gap-y-8 lg:grid-cols-5'>
+					<div className='lg:col-span-2 lg:py-12 grid gap-5'>
+						{count ? (
+							<div>
+								{services.map((service) => (
+									<MyService
+										key={service._id}
+										service={service}
+									/>
+								))}
+							</div>
+						) : (
+							<div>
+								<h3>You didn't added any service!</h3>
+							</div>
+						)}
 					</div>
 
-					<div class=' lg:col-span-3 lg:p-12'>
+					<div className=' lg:col-span-3 lg:p-12'>
 						<form
 							onSubmit={handleSubmit(onSubmit)}
-							class='space-y-4 rounded-lg bg-white p-8 shadow-lg'
+							className='space-y-4 rounded-lg bg-white p-8 shadow-lg'
 						>
 							<div>
 								<div className='form-control'>
@@ -114,7 +118,7 @@ const AddService = () => {
 								</label>
 							</div>
 
-							<div class='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+							<div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
 								<div>
 									<div className='form-control'>
 										<label className='label'>
@@ -186,16 +190,16 @@ const AddService = () => {
 								</label>
 							</div>
 
-							<div class='mt-4'>
-								<button class='inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto'>
-									<span class='font-medium'>
+							<div className='mt-4'>
+								<button className='inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto'>
+									<span className='font-medium'>
 										{' '}
 										Submit{' '}
 									</span>
 
 									<svg
 										xmlns='http://www.w3.org/2000/svg'
-										class='ml-3 h-5 w-5'
+										className='ml-3 h-5 w-5'
 										fill='none'
 										viewBox='0 0 24 24'
 										stroke='currentColor'

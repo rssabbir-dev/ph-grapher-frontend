@@ -4,6 +4,7 @@ import Main from '../layout/Main';
 import Account from '../pages/Account/Account';
 import AddService from '../pages/AddService/AddService';
 import Blogs from '../pages/Blogs/Blogs';
+import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import Home from '../pages/Home/Home';
 import Login from '../pages/LoginManager/Login';
 import Registration from '../pages/LoginManager/Registration';
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
 					</PrivateRoute>
 				),
 			},
+			{
+				path: '*',
+				element:<ErrorPage/>
+			}
 		],
 	},
 	{

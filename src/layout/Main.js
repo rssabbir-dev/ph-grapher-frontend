@@ -7,7 +7,7 @@ const Main = () => {
 	return (
 		<div>
 			<Header />
-			<div className='space-y-20'>
+			<div>
 				<Outlet />
 				<Footer />
 			</div>
