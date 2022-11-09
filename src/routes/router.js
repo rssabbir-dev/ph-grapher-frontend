@@ -1,7 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 import ForAuth from '../layout/ForAuth';
 import Main from '../layout/Main';
+import Account from '../pages/Account/Account';
 import AddService from '../pages/AddService/AddService';
+import Blogs from '../pages/Blogs/Blogs';
 import Home from '../pages/Home/Home';
 import Login from '../pages/LoginManager/Login';
 import Registration from '../pages/LoginManager/Registration';
@@ -30,14 +32,30 @@ export const router = createBrowserRouter([
 				element: <Services />,
 			},
 			{
+				path: '/blogs',
+				element: <Blogs />,
+			},
+			{
 				path: '/add-service',
-				element:<AddService/>
+				element: (
+					<PrivateRoute>
+						<AddService />
+					</PrivateRoute>
+				),
 			},
 			{
 				path: '/my-review',
 				element: (
 					<PrivateRoute>
 						<MyReview />
+					</PrivateRoute>
+				),
+			},
+			{
+				path: '/account',
+				element: (
+					<PrivateRoute>
+						<Account />
 					</PrivateRoute>
 				),
 			},

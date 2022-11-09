@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
+import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import auth from '../../firebase/firebase.config';
 import { serverURL } from '../../routes/router';
+import MyService from './MyService';
 
 const AddService = () => {
-    const [services, setServices] = useState([]);
-    const [count,setCount] = useState(0)
+	const [services, setServices] = useState([]);
+    const [count, setCount] = useState(0);
+    const [reloadData,setReloadData] = useState(0)
+	const { user } = useContext(AuthContext);
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm();
 	const onSubmit = (service) => {
@@ -17,9 +23,9 @@ const AddService = () => {
 			title,
 			img,
 			description,
-            price,
-            createBy: auth.currentUser.uid,
-            createAt:new Date()
+			price,
+			createBy: auth.currentUser.uid,
+			createAt: new Date(),
 		};
 		fetch(`${serverURL}/services?uid=${auth.currentUser.uid}`, {
 			method: 'POST',
@@ -31,48 +37,57 @@ const AddService = () => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
+				if (data.acknowledged) {
+					Swal.fire({
+						title: 'Service Added!',
+						text: 'Your Service Added Successfully. !',
+						icon: 'success',
+						showCancelButton: false,
+						cancelButtonColor: '#d33',
+					});
+                    reset();
+                    setReloadData(reloadData+1)
+				}
 			});
-    };
-    useEffect(() => {
-        fetch(`${serverURL}/my-service?uid=${auth.currentUser.uid}`, {
-            headers: {
-                'content-type':'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                setServices(data.servics)
-                setCount(data.count)
-        })
-    },[])
+	};
+	useEffect(() => {
+		fetch(`${serverURL}/my-service?uid=${user?.uid}`, {
+			headers: {
+				authorization: `Bearer ${localStorage.getItem('ph-token')}`,
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data);
+				setServices(data.services);
+				setCount(data.count);
+			});
+	}, [user?.uid,reloadData]);
 	return (
-		<section class='bg-gray-100'>
-			<div class='mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'>
-				<div class='grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5'>
-					<div class='lg:col-span-2 lg:py-12'>
-						<p class='max-w-xl text-lg'>
-							At the same time, the fact that we are wholly owned
-							and totally independent from manufacturer and other
-							group control gives you confidence that we will only
-							recommend what is right for you.
-						</p>
-
-						<div class='mt-8'>
-							<a href='' class='text-2xl font-bold text-pink-600'>
-								0151 475 4450
-							</a>
-
-							<address class='mt-2 not-italic'>
-								282 Kevin Brook, Imogeneborough, CA 58517
-							</address>
-						</div>
+		<section>
+			<div class='mx-auto w-11/12'>
+				<h1 className='text-3xl uppercase font-light'>
+					You Added: {count} Service - Create New
+				</h1>
+				<div className='divider'></div>
+				<div class='flex flex-col-reverse lg:grid gap-x-16 gap-y-8 lg:grid-cols-5'>
+					<div class='lg:col-span-2 lg:py-12 grid gap-5'>
+						{count ? <div>
+							{services.map((service) => (
+								<MyService
+									key={service._id}
+									service={service}
+								/>
+							))}
+                        </div> : <div>
+                        <h3>You didn't added any service!</h3>
+                        </div>}
 					</div>
 
-					<div class='rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12'>
+					<div class=' lg:col-span-3 lg:p-12'>
 						<form
 							onSubmit={handleSubmit(onSubmit)}
-							class='space-y-4'
+							class='space-y-4 rounded-lg bg-white p-8 shadow-lg'
 						>
 							<div>
 								<div className='form-control'>
@@ -109,7 +124,7 @@ const AddService = () => {
 										</label>
 										<input
 											type='text'
-											placeholder='Service Photo'
+											placeholder='Service Photo size:1000x600'
 											className='input input-bordered'
 											{...register('img', {
 												required: true,
@@ -154,7 +169,7 @@ const AddService = () => {
 							<div>
 								<div className='form-control space-y-3'>
 									<textarea
-										placeholder='Describe you feedback'
+										placeholder='Describe service details...'
 										className='textarea textarea-bordered'
 										rows='8'
 										{...register('description', {
@@ -175,7 +190,7 @@ const AddService = () => {
 								<button class='inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto'>
 									<span class='font-medium'>
 										{' '}
-										Send Enquiry{' '}
+										Submit{' '}
 									</span>
 
 									<svg

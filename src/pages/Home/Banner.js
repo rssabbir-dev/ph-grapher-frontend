@@ -23,18 +23,18 @@ const Banner = () => {
 
 					<div className='mt-8 flex flex-wrap gap-4 text-center'>
 						<Link
-							to='/'
+							to='/services'
 							className='block w-full btn btn-primary rounded px-12 py-3 text-sm font-medium text-white shadow focus:outline-none sm:w-auto'
 						>
 							Get Started
 						</Link>
 
-						<a
-							href='#'
+						<Link
+							to='/'
 							className='block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto'
 						>
 							Learn More
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

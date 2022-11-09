@@ -30,6 +30,9 @@ const Header = () => {
 					</li>
 				</>
 			)}
+			<li>
+				<Link to='/blogs'>Blogs</Link>
+			</li>
 		</>
 	);
 	return (
