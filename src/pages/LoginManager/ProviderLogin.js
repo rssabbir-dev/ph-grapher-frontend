@@ -33,7 +33,6 @@ const ProviderLogin = () => {
 			body: JSON.stringify(currentUser),
 		});
 		const data = await response.json();
-		console.log(data);
 		localStorage.setItem('ph-token', data.token);
 	};
 	return (

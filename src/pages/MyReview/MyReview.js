@@ -32,8 +32,6 @@ const MyReview = () => {
 				if (res.status === 401 || res.status === 403) {
 					return logOut().then(() => {
 						toast.error('Session Expired, Login Again');
-						localStorage.removeItem('ph-token');
-						navigate('/login');
 					});
 				}
 				return res.json();
@@ -42,7 +40,7 @@ const MyReview = () => {
 				setReviews(data.reviews);
 				setCount(data.count);
 			});
-	}, [logOut, navigate, user?.uid, reloadData]);
+	}, [logOut, user?.uid, reloadData]);
 
 	const handleDelete = (id) => {
 		Swal.fire({
@@ -176,7 +174,7 @@ const MyReview = () => {
 						<div className='form-control space-y-3'>
 							<textarea
 								placeholder='Describe you feedback'
-								value={selectUpdate?.user_review}
+								defaultValue={selectUpdate?.user_review}
 								className='textarea textarea-bordered'
 								{...register('user_review', {
 									required: true,
@@ -206,9 +204,9 @@ const MyReview = () => {
 					You reviewed {count} service
 				</h2>
 				<div className='divider'></div>
-				<div className='grid gap-10 '>
+				<div>
 					{count ? (
-						<div>
+						<div className='grid gap-10'>
 							{reviews.map((review) => (
 								<MyReviewItem
 									handleDelete={handleDelete}

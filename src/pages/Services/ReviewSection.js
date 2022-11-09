@@ -41,10 +41,11 @@ const ReviewSection = ({ service }) => {
 			service_photo: service.img,
 			createAt: new Date(),
 		};
-		fetch(`${serverURL}/review`, {
+		fetch(`${serverURL}/review?uid=${user?.uid}`, {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
+				authorization:`Bearer ${localStorage.getItem('ph-token')}`
 			},
 			body: JSON.stringify(review),
 		})
@@ -198,7 +199,7 @@ const ReviewSection = ({ service }) => {
 					</div>
 				</div>
 
-				<div className='mt-8 grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-2'>
+				<div className='mt-8 grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-2 h-full'>
 					{reviews.map((review) => (
 						<ReviewItem key={review._id} review={review} />
 					))}
