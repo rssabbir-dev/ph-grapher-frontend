@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import auth from '../../firebase/firebase.config';
 import { serverURL } from '../../routes/router';
 import Spinner from '../shared/Spinner/Spinner';
-import MyService from './MyService';
+import MyService from './MyService'; 
 
 const AddService = () => {
 	const [services, setServices] = useState([]);
@@ -15,6 +15,7 @@ const AddService = () => {
 	const [reloadData, setReloadData] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const { user } = useContext(AuthContext);
+	const [serviceImg, setServiceImg] = useState();
 	const {
 		register,
 		handleSubmit,
@@ -22,22 +23,21 @@ const AddService = () => {
 		formState: { errors },
 	} = useForm();
 	const onSubmit = (service) => {
-		const { title, img, description, price } = service;
-		const postService = {
-			title,
-			img,
-			description,
-			price,
-			createBy: auth.currentUser.uid,
-			createAt: new Date(),
-		};
+		const { title, description, price } = service;
+		const formData = new FormData();
+		formData.append('title', title);
+		formData.append('image', serviceImg);
+		formData.append('description', description);
+		formData.append('price', price);
+		formData.append('createBy', auth.currentUser.uid);
+		formData.append('createAt', new Date());
+		
 		fetch(`${serverURL}/services?uid=${auth.currentUser.uid}`, {
 			method: 'POST',
 			headers: {
-				'content-type': 'application/json',
 				authorization: `Bearer ${document.cookie.split('=')[1]}`,
 			},
-			body: JSON.stringify(postService),
+			body:formData
 		})
 			.then((res) => res.json())
 			.then((data) => {
@@ -68,6 +68,7 @@ const AddService = () => {
 				setLoading(false);
 			});
 	}, [user?.uid, reloadData]);
+
 	return (
 		<HelmetProvider>
 			<section className='min-h-screen my-10'>
@@ -141,17 +142,31 @@ const AddService = () => {
 														Service Photo
 													</span>
 												</label>
-												<input
+												{/* <input
 													type='text'
 													placeholder='Service Photo size:1000x600'
 													className='input input-bordered'
 													{...register('img', {
 														required: true,
 													})}
+												/> */}
+												<input
+													{...register('image', {
+														required: true,
+													})}
+													name='image'
+													encType='multipart/form-data'
+													onChange={(e) =>
+														setServiceImg(
+															e.target.files[0]
+														)
+													}
+													type='file'
+													className='file-input file-input-bordered w-full max-w-xs'
 												/>
 											</div>
 											<label className='label'>
-												{errors.img && (
+												{errors.image && (
 													<span className='label-text-alt'>
 														This field is required
 													</span>
@@ -193,7 +208,7 @@ const AddService = () => {
 												rows='8'
 												{...register('description', {
 													required: true,
-													minLength:100
+													minLength: 100,
 												})}
 											/>
 										</div>
