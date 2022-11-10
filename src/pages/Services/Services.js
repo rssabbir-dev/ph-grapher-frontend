@@ -35,13 +35,21 @@ const Services = () => {
 	}, [page, size]);
 	return (
 		<HelmetProvider>
-			<div className='w-11/12 mx-auto min-h-screen mb-20'>
+			<div className='w-11/12 mx-auto min-h-screen my-10'>
 				<Helmet>
 					<title>Services - {siteName}</title>
 				</Helmet>
 				{loading && <Spinner />}
 				{!loading && (
 					<>
+						<div className='uppercase'>
+							<h1 className='text-3xl font-light'>Here is the all my services</h1>
+						<p className='text-sm'>
+							You simply pickup one of them for your upcoming
+							events
+							</p>
+							<div className='divider'></div>
+						</div>
 						<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 h-full'>
 							{services.map((service) => (
 								<ServiceCard

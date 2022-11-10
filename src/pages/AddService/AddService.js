@@ -70,7 +70,7 @@ const AddService = () => {
 	}, [user?.uid, reloadData]);
 	return (
 		<HelmetProvider>
-			<section>
+			<section className='min-h-screen my-10'>
 				<Helmet>
 					<title>Add New Service - {siteName}</title>
 				</Helmet>
@@ -80,6 +80,9 @@ const AddService = () => {
 						<h1 className='text-3xl uppercase font-light'>
 							You Added: {count} Service - Create New
 						</h1>
+						<p className='text-sm uppercase'>
+							You can simply post your services on my site.
+						</p>
 						<div className='divider'></div>
 						<div className='flex flex-col-reverse lg:grid gap-x-16 gap-y-8 lg:grid-cols-5'>
 							<div className='lg:col-span-2 lg:py-12 grid gap-5'>

@@ -150,7 +150,7 @@ const MyReview = () => {
 	};
 	return (
 		<HelmetProvider>
-			<div className='min-h-screen'>
+			<div className='min-h-screen my-10'>
 				<Helmet>
 					<title>My Review - {siteName}</title>
 				</Helmet>{' '}
@@ -247,6 +247,9 @@ const MyReview = () => {
 							<h2 className='text-3xl uppercase font-light'>
 								You reviewed {count} service
 							</h2>
+							<p className='text-sm uppercase'>
+								Checkout all your review those you give our services
+							</p>
 							<div className='divider'></div>
 							<div>
 								{count && user?.uid ? (

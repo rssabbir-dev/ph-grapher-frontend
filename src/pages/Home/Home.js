@@ -42,7 +42,7 @@ const Home = () => {
 				{!loading && (
 					<>
 						<Banner executeScroll={executeScroll} />
-						<div className='bg-white py-10'>
+						<div className='bg-white pt-10'>
 							<div className='w-11/12 mx-auto space-y-5'>
 								<h1 className='text-4xl uppercase font-semibold'>
 									Just one click away!

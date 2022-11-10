@@ -19,11 +19,20 @@ const Blogs = () => {
 	}, []);
 	return (
 		<HelmetProvider>
-			<div className='w-11/12 mx-auto grid gap-5 min-h-screen'>
+			<div className='w-11/12 mx-auto grid gap-5 min-h-screen py-10'>
 				<Helmet>
-				<title>Blogs - {siteName}</title>
-			</Helmet>
+					<title>Blogs - {siteName}</title>
+				</Helmet>
 				{loading && <Spinner />}
+				<div className='uppercase'>
+					<h1 className='text-3xl font-light'>
+						Checkout my blogs
+					</h1>
+					<p className='text-sm'>
+						I posted new blog on every week
+					</p>
+					<div className='divider'></div>
+				</div>
 				{!loading && (
 					<>
 						{blogs.map((blog) => (
