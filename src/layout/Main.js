@@ -3,9 +3,9 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../pages/shared/Footer/Footer';
 import Header from '../pages/shared/Header/Header';
 
-const Main = () => {
-	//Scroll TO top of the page when route got changed
-	const useScrollToTop = () => {
+
+//Scroll TO top of the page when route got changed
+	export const useScrollToTop = () => {
 		const { pathname } = useLocation();
 
 		useEffect(() => {
@@ -13,6 +13,8 @@ const Main = () => {
 		}, [pathname]);
 		return null;
 	};
+const Main = () => {
+	
 
 	useScrollToTop();
 	return (

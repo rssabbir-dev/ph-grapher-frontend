@@ -32,7 +32,7 @@ const Registration = () => {
 				toast.success('Login Success');
 				handleJwtToken(user);
 				navigate(from, { replace: true });
-			})
+			})     
 			.catch((err) => toast.error(err.message));
 	};
 	const handleJwtToken = (user) => {
@@ -46,7 +46,7 @@ const Registration = () => {
 		})
 			.then((res) => res.json())
 			.then((token) => {
-				localStorage.setItem('ph-token', token.token);
+				document.cookie = "ph-token=" + token.token
 			});
 	};
 	return (

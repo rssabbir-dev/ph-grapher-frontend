@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Banner = () => {
+const Banner = ({ executeScroll }) => {
 	return (
 		<section
 			className={`relative bg-header-banner bg-fixed bg-cover bg-center bg-no-repeat -mt-3`}
@@ -18,7 +18,9 @@ const Banner = () => {
 					</h1>
 
 					<p className='mt-4 max-w-lg sm:text-xl sm:leading-relaxed'>
-						Hi, I'am Sabbir Hossain, a professional Photographer, and expert on PhotoShop. You can checkout my service Here.
+						Hi, I'am Sabbir Hossain, a professional Photographer,
+						and expert on PhotoShop. You can checkout my service
+						Here.
 					</p>
 
 					<div className='mt-8 flex flex-wrap gap-4 text-center'>
@@ -29,12 +31,12 @@ const Banner = () => {
 							Get Started
 						</Link>
 
-						<Link
-							to='/'
+						<button
+							onClick={executeScroll}
 							className='block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto'
 						>
 							Learn More
-						</Link>
+						</button>
 					</div>
 				</div>
 			</div>

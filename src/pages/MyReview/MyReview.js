@@ -29,7 +29,7 @@ const MyReview = () => {
 		setLoading(true);
 		fetch(`${serverURL}/my-review?uid=${user?.uid}`, {
 			headers: {
-				authorization: `Bearer ${localStorage.getItem('ph-token')}`,
+				authorization: `Bearer ${document.cookie.split('=')[1]}`,
 			},
 		})
 			.then((res) => {
@@ -94,7 +94,6 @@ const MyReview = () => {
 			}
 		});
 	};
-
 	const onSubmit = async (inputData) => {
 		const { user_review } = inputData;
 		const modal = document.getElementById('my-modal');
@@ -108,7 +107,7 @@ const MyReview = () => {
 				method: 'PATCH',
 				headers: {
 					'content-type': 'application/json',
-					authorization: `Bearer ${localStorage.getItem('ph-token')}`,
+					authorization: `Bearer ${document.cookie.split('=')[1]}`,
 				},
 				body: JSON.stringify(review),
 			}

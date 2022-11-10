@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { siteName } from '../../App';
@@ -21,6 +21,17 @@ const Home = () => {
 				setLoading(false);
 			});
 	}, []);
+	const scrollToRef = (ref) => {
+		// return window.scrollTo(0, ref.current.offsetTop)
+		return window.scrollTo({
+			top: ref.current.offsetTop,
+			behavior: 'smooth',
+		});
+	}
+	const executeScroll = () => {
+		return scrollToRef(testimonialRef)
+	}
+	const testimonialRef = useRef(null)
 	return (
 		<HelmetProvider>
 			<div className='space-y-10 min-h-screen'>
@@ -30,7 +41,7 @@ const Home = () => {
 				{loading && <Spinner />}
 				{!loading && (
 					<>
-						<Banner />
+						<Banner executeScroll={executeScroll} />
 						<div className='bg-white py-10'>
 							<div className='w-11/12 mx-auto space-y-5'>
 								<h1 className='text-4xl uppercase font-semibold'>
@@ -50,7 +61,9 @@ const Home = () => {
 									</Link>
 								</div>
 								<ServiceSlider services={services} />
-								<Testimonial />
+								<div ref={testimonialRef}>
+									<Testimonial />
+								</div>
 							</div>
 							<Newsletter />
 						</div>

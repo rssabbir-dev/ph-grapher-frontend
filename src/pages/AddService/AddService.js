@@ -35,7 +35,7 @@ const AddService = () => {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
-				authorization: `Bearer ${localStorage.getItem('ph-token')}`,
+				authorization: `Bearer ${document.cookie.split('=')[1]}`,
 			},
 			body: JSON.stringify(postService),
 		})
@@ -58,7 +58,7 @@ const AddService = () => {
 		setLoading(true);
 		fetch(`${serverURL}/my-service?uid=${user?.uid}`, {
 			headers: {
-				authorization: `Bearer ${localStorage.getItem('ph-token')}`,
+				authorization: `Bearer ${document.cookie.split('=')[1]}`,
 			},
 		})
 			.then((res) => res.json())

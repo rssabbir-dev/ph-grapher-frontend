@@ -18,7 +18,7 @@ const ReviewSection = ({ service }) => {
 
 	let average = 0;
 	if (!isNaN(sum / count)) {
-		average = (sum / count)
+		average = sum / count;
 	}
 	const {
 		register,
@@ -45,7 +45,7 @@ const ReviewSection = ({ service }) => {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
-				authorization:`Bearer ${localStorage.getItem('ph-token')}`
+				authorization: `Bearer ${document.cookie.split('=')[1]}`,
 			},
 			body: JSON.stringify(review),
 		})
@@ -105,8 +105,18 @@ const ReviewSection = ({ service }) => {
 								</div>
 							</div>
 							<div className='form-control space-y-3'>
-								<input className='input input-bordered' disabled type="text" defaultValue={user?.displayName} />
-								<input className='input input-bordered' disabled type="email" defaultValue={user?.email} />
+								<input
+									className='input input-bordered'
+									disabled
+									type='text'
+									defaultValue={user?.displayName}
+								/>
+								<input
+									className='input input-bordered'
+									disabled
+									type='email'
+									defaultValue={user?.email}
+								/>
 								<textarea
 									placeholder='Describe you feedback'
 									className='textarea textarea-bordered'
@@ -161,7 +171,7 @@ const ReviewSection = ({ service }) => {
 				<div className='flex justify-between items-center'>
 					<div className='mt-4 flex items-center'>
 						<p className='text-3xl font-medium'>
-							{(average).toFixed(1)}
+							{average.toFixed(1)}
 							<span className='sr-only'>
 								{' '}
 								Average review score{' '}

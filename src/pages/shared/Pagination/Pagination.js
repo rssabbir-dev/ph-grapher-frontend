@@ -1,6 +1,8 @@
 import React from 'react';
+import { useScrollToTop } from '../../../layout/Main';
 
 const Pagination = ({ paginationInfo }) => {
+	useScrollToTop()
 	const { size, setSize, page, setPage, pages } = paginationInfo;
 	return (
 		<div>
