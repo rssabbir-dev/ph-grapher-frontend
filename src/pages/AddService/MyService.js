@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
-import { serverURL } from '../../routes/router';
 
 const MyService = ({ service }) => {
 	const { _id, title, img, description } = service;
@@ -12,7 +11,7 @@ const MyService = ({ service }) => {
 				<div className='h-20 w-32'>
 					<img
 						alt={title}
-						src={`${img}`}
+						src={img}
 						className='h-full w-full rounded-lg object-cover'
 					/>
 				</div>
