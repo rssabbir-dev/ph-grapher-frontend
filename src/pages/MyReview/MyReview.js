@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { siteName } from '../../App';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { serverURL } from '../../routes/router';
+import BtnSpinner from '../shared/Spinner/BtnSpinner';
 import Spinner from '../shared/Spinner/Spinner';
 import MyReviewItem from './MyReviewItem';
 
@@ -15,6 +16,7 @@ const MyReview = () => {
 	const [reviews, setReviews] = useState([]);
 	const [count, setCount] = useState(0);
 	const [loading, setLoading] = useState(false);
+	const [btnLoading, setBtnLoading] = useState(false);
 	const { user, logOut } = useContext(AuthContext);
 	const [reloadData, setReloadData] = useState(0);
 	const navigate = useNavigate();
@@ -22,6 +24,7 @@ const MyReview = () => {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm();
 
@@ -59,6 +62,7 @@ const MyReview = () => {
 		}).then((result) => {
 			/* Read more about isConfirmed, isDenied below */
 			if (result.isConfirmed) {
+				setBtnLoading(true);
 				fetch(
 					`${serverURL}/my-review-delete?id=${id}&uid=${user?.uid}`,
 					{
@@ -89,6 +93,7 @@ const MyReview = () => {
 								showCancelButton: false,
 								cancelButtonColor: '#d33',
 							});
+							setBtnLoading(false);
 						}
 					});
 			}
@@ -101,6 +106,7 @@ const MyReview = () => {
 			user_review: user_review,
 			user_rating: rating + 1,
 		};
+		setBtnLoading(true);
 		const response = await fetch(
 			`${serverURL}/my-review-update?id=${selectUpdate._id}&uid=${user?.uid}`,
 			{
@@ -115,7 +121,9 @@ const MyReview = () => {
 
 		const data = await response.json();
 		if (data.modifiedCount > 0) {
+			setBtnLoading(false);
 			setReloadData(reloadData + 1);
+			reset();
 			Swal.fire({
 				title: 'Updated!',
 				text: 'Your Review has been Updated. !',
@@ -124,6 +132,7 @@ const MyReview = () => {
 				cancelButtonColor: '#d33',
 			});
 			modal.checked = false;
+			
 		}
 		if (response.status === 401 || response.status === 403) {
 			return logOut().then(() => {
@@ -134,9 +143,9 @@ const MyReview = () => {
 		}
 	};
 	const handleUpdate = (preReview) => {
+		setSelectUpdate(preReview);
 		const modal = document.getElementById('my-modal');
 		modal.checked = true;
-		setSelectUpdate(preReview);
 		setRating(preReview.user_rating - 1);
 	};
 	return (
@@ -198,9 +207,6 @@ const MyReview = () => {
 									<div className='form-control space-y-3'>
 										<textarea
 											placeholder='Describe you feedback'
-											defaultValue={
-												selectUpdate?.user_review
-											}
 											className='textarea textarea-bordered'
 											{...register('user_review', {
 												required: true,
@@ -214,16 +220,23 @@ const MyReview = () => {
 											</span>
 										)}
 									</label>
+									<div className='flex justify-center'>
+										{btnLoading && <BtnSpinner />}
+									</div>
 									<div className='modal-action'>
-										<label
-											htmlFor='my-modal'
-											className='btn'
-										>
-											Close
-										</label>
-										<button className='btn btn-primary'>
-											Submit
-										</button>
+										{!btnLoading && (
+											<>
+												<label
+													htmlFor='my-modal'
+													className='btn'
+												>
+													Close
+												</label>
+												<button className='btn btn-primary'>
+													Submit
+												</button>
+											</>
+										)}
 									</div>
 								</div>
 							</form>
@@ -236,13 +249,14 @@ const MyReview = () => {
 							</h2>
 							<div className='divider'></div>
 							<div>
-								{count ? (
+								{count && user?.uid ? (
 									<div className='grid gap-10'>
 										{reviews.map((review) => (
 											<MyReviewItem
 												handleDelete={handleDelete}
 												handleUpdate={handleUpdate}
 												review={review}
+												btnLoading={btnLoading}
 												key={review._id}
 											/>
 										))}

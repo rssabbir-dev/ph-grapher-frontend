@@ -13,6 +13,7 @@ const ServiceDetails = () => {
 	const [service, setService] = useState({});
 	const [quantity, setQuantity] = useState(1);
 	const [loading, setLoading] = useState(false);
+	
 	const { title, img, description, price } = service;
 	useEffect(() => {
 		setLoading(true);

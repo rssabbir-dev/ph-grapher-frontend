@@ -1,4 +1,6 @@
 import React from 'react';
+import { ThreeDots } from 'react-loader-spinner';
+import { Link } from 'react-router-dom';
 
 export const timeConvert = (time) => {
 	// Check correct time format and split into components
@@ -14,7 +16,7 @@ export const timeConvert = (time) => {
 	}
 	return time.join(''); // return adjusted time or original string
 };
-const MyReviewItem = ({ review,handleDelete,handleUpdate }) => {
+const MyReviewItem = ({ review,handleDelete,handleUpdate,btnLoading }) => {
 	
     const {
         _id,
@@ -23,6 +25,7 @@ const MyReviewItem = ({ review,handleDelete,handleUpdate }) => {
 		service_name,
 		service_photo,
 		user_rating,
+		service_id
 	} = review;
 	const date = new Date(createAt).toString().split(' ');
 
@@ -74,8 +77,8 @@ const MyReviewItem = ({ review,handleDelete,handleUpdate }) => {
 								</svg>
 							))}
 						</div>
-						<h3 className='font-bold uppercase text-gray-900'>
-							{service_name}
+						<h3 className='font-bold uppercase text-gray-900 link link-hover'>
+							<Link to={`/service/${service_id}`}>{service_name}</Link>
 						</h3>
 					</span>
 
@@ -95,7 +98,20 @@ const MyReviewItem = ({ review,handleDelete,handleUpdate }) => {
 						onClick={() => handleDelete(_id)}
 						className='block btn-primary px-5 py-3 text-center text-xs font-bold uppercase'
 					>
-						Delete
+						{!btnLoading ? (
+							'Delete'
+						) : (
+							<ThreeDots
+								height='16'
+								width='40'
+								radius='5'
+								color='#fff'
+								ariaLabel='three-dots-loading'
+								wrapperStyle={{}}
+								wrapperClassName=''
+								visible={true}
+							/>
+						)}
 					</button>
 				</div>
 			</div>

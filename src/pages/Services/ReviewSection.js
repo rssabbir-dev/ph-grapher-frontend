@@ -4,22 +4,31 @@ import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { serverURL } from '../../routes/router';
+import Pagination from '../shared/Pagination/Pagination';
+import BtnSpinner from '../shared/Spinner/BtnSpinner';
 import ReviewItem from './ReviewItem';
 
 const ReviewSection = ({ service }) => {
 	const params = useParams();
 	const { user } = useContext(AuthContext);
 	const [reviews, setReviews] = useState([]);
-	const [count, setCount] = useState(0);
 	const [reloadData, setReloadData] = useState(0);
+	const [btnLoading, setBtnLoading] = useState(false);
 	const [rating, setRating] = useState(4);
+	const [average, setAverage] = useState(0);
+	//Pagination Data
+	const [count, setCount] = useState(0);
+	const [size, setSize] = useState(6);
+	const [page, setPage] = useState(0);
+	const pages = Math.ceil(count / size);
+	const paginationInfo = {
+		size,
+		setSize,
+		page,
+		setPage,
+		pages,
+	};
 
-	const sum = reviews.reduce((pre, cur) => pre + cur.user_rating, 0);
-
-	let average = 0;
-	if (!isNaN(sum / count)) {
-		average = sum / count;
-	}
 	const {
 		register,
 		handleSubmit,
@@ -41,6 +50,7 @@ const ReviewSection = ({ service }) => {
 			service_photo: service.img,
 			createAt: new Date(),
 		};
+		setBtnLoading(true);
 		fetch(`${serverURL}/review?uid=${user?.uid}`, {
 			method: 'POST',
 			headers: {
@@ -56,17 +66,21 @@ const ReviewSection = ({ service }) => {
 					toast.success('Review posted');
 					reset();
 					setReloadData(reloadData + 1);
+					setBtnLoading(false);
 				}
 			});
 	};
 	useEffect(() => {
-		fetch(`${serverURL}/reviews?service_id=${params.id}`)
+		fetch(
+			`${serverURL}/reviews?service_id=${params.id}&page=${page}&size=${size}`
+		)
 			.then((res) => res.json())
 			.then((data) => {
 				setReviews(data.reviews);
 				setCount(data.count);
+				setAverage(data.average);
 			});
-	}, [params.id, reloadData]);
+	}, [page, params.id, reloadData, size]);
 	return (
 		<section>
 			{/* Review Modal */}
@@ -132,13 +146,23 @@ const ReviewSection = ({ service }) => {
 									</span>
 								)}
 							</label>
+							<div className='flex justify-center'>
+								{btnLoading && <BtnSpinner />}
+							</div>
 							<div className='modal-action'>
-								<label htmlFor='my-modal' className='btn'>
-									Close
-								</label>
-								<button className='btn btn-primary'>
-									Submit
-								</button>
+								{!btnLoading && (
+									<>
+										<label
+											htmlFor='my-modal'
+											className='btn'
+										>
+											Close
+										</label>
+										<button className='btn btn-primary'>
+											Submit
+										</button>
+									</>
+								)}
 							</div>
 						</div>
 					) : (
@@ -209,10 +233,21 @@ const ReviewSection = ({ service }) => {
 					</div>
 				</div>
 
+				<div className='divider'></div>
 				<div className='mt-8 grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-2 h-full'>
 					{reviews.map((review) => (
 						<ReviewItem key={review._id} review={review} />
 					))}
+				</div>
+				<div>
+					{!count && (
+						<div>
+							<h3 className='uppercase text-xl font-light'>
+								No one give review on this service!
+							</h3>
+						</div>
+					)}
+					<Pagination paginationInfo={paginationInfo} />
 				</div>
 			</div>
 		</section>

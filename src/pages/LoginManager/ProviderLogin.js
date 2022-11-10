@@ -33,7 +33,7 @@ const ProviderLogin = () => {
 			body: JSON.stringify(currentUser),
 		});
 		const data = await response.json();
-		localStorage.setItem('ph-token', data.token);
+		document.cookie = 'ph-token=' + data.token;
 	};
 	return (
 		<div className='flex justify-center'>
