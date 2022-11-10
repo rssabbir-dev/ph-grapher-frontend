@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { siteName } from '../../App';
 import { serverURL } from '../../routes/router';
 import Spinner from '../shared/Spinner/Spinner';
@@ -18,19 +18,21 @@ const Blogs = () => {
             });
 	}, []);
 	return (
-		<div className='w-11/12 mx-auto grid gap-5 min-h-screen'>
-			<Helmet>
+		<HelmetProvider>
+			<div className='w-11/12 mx-auto grid gap-5 min-h-screen'>
+				<Helmet>
 				<title>Blogs - {siteName}</title>
 			</Helmet>
-			{loading && <Spinner />}
-			{!loading && (
-				<>
-					{blogs.map((blog) => (
-						<Blog blog={blog} key={blog._id} />
-					))}
-				</>
-			)}
-		</div>
+				{loading && <Spinner />}
+				{!loading && (
+					<>
+						{blogs.map((blog) => (
+							<Blog blog={blog} key={blog._id} />
+						))}
+					</>
+				)}
+			</div>
+		</HelmetProvider>
 	);
 };
 

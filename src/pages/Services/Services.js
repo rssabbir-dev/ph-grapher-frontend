@@ -1,36 +1,61 @@
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { siteName } from '../../App';
 import { serverURL } from '../../routes/router';
+import Pagination from '../shared/Pagination/Pagination';
 import Spinner from '../shared/Spinner/Spinner';
 import ServiceCard from './ServiceCard';
 
 const Services = () => {
 	const [services, setServices] = useState([]);
-	const [loading,setLoading] = useState(false)
+	const [loading, setLoading] = useState(false)
+	const [count, setCount] = useState(0);
+	const [size, setSize] = useState(6);
+	const [page,setPage] = useState(0)
+	const pages = Math.ceil(count / size);
+	const paginationInfo = {
+		size,
+		setSize,
+		page,
+		setPage,
+		pages
+	}
+
+
 	useEffect(() => {
 		setLoading(true)
-		fetch(`${serverURL}/services`)
+		const url = `${serverURL}/services?size=${size}&page=${page}`
+		fetch(url)
 			.then((res) => res.json())
 			.then((data) => {
-				setServices(data);
+				setServices(data.services);
+				setCount(data.count)
 				setLoading(false)
 			});
-	}, []);
+	}, [page, size]);
 	return (
-		<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 h-full w-11/12 mx-auto min-h-screen'>
-			<Helmet>
-				<title>Services - {siteName}</title>
-			</Helmet>
-			{loading && <Spinner />}
-			{!loading && (
-				<>
-					{services.map((service) => (
-						<ServiceCard key={service._id} service={service} />
-					))}
-				</>
-			)}
-		</div>
+		<HelmetProvider>
+			<div className='w-11/12 mx-auto min-h-screen mb-20'>
+				<Helmet>
+					<title>Services - {siteName}</title>
+				</Helmet>
+				{loading && <Spinner />}
+				{!loading && (
+					<>
+						<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 h-full'>
+							{services.map((service) => (
+								<ServiceCard
+									key={service._id}
+									service={service}
+								/>
+							))}
+						</div>
+
+						<Pagination paginationInfo={paginationInfo} />
+					</>
+				)}
+			</div>
+		</HelmetProvider>
 	);
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import { useParams } from 'react-router-dom';
@@ -20,7 +20,7 @@ const ServiceDetails = () => {
 	}, [params.id]);
 
 	return (
-		<>
+		<HelmetProvider>
 			<Helmet>
 				<title>{`${title} - ${siteName}`}</title>
 			</Helmet>
@@ -121,7 +121,7 @@ const ServiceDetails = () => {
 				</div>
 			</section>
 			<ReviewSection service={service} />
-		</>
+		</HelmetProvider>
 	);
 };
 

@@ -30,7 +30,8 @@ const Testimonial = () => {
 						</h2>
 
 						<p className='mt-4 text-gray-500'>
-							Here is the few customer review they give me after I done there work's.
+							Here is the few customer review they give me after I
+							done there work's.
 						</p>
 
 						<div className='hidden lg:mt-8 lg:flex lg:gap-4'>
@@ -45,9 +46,9 @@ const Testimonial = () => {
 								>
 									<path
 										d='M9 5l7 7-7 7'
-										stroke-linecap='round'
-										stroke-linejoin='round'
-										stroke-width='2'
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth='2'
 									/>
 								</svg>
 							</button>
@@ -63,9 +64,9 @@ const Testimonial = () => {
 								>
 									<path
 										d='M9 5l7 7-7 7'
-										stroke-linecap='round'
-										stroke-linejoin='round'
-										stroke-width='2'
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth='2'
 									/>
 								</svg>
 							</button>
@@ -113,9 +114,9 @@ const Testimonial = () => {
 						>
 							<path
 								d='M9 5l7 7-7 7'
-								stroke-linecap='round'
-								stroke-linejoin='round'
-								stroke-width='2'
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth='2'
 							/>
 						</svg>
 					</button>
@@ -133,9 +134,9 @@ const Testimonial = () => {
 						>
 							<path
 								d='M9 5l7 7-7 7'
-								stroke-linecap='round'
-								stroke-linejoin='round'
-								stroke-width='2'
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth='2'
 							/>
 						</svg>
 					</button>
