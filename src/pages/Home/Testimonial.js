@@ -9,7 +9,6 @@ import 'swiper/css/navigation';
 // import required modules
 import { Autoplay, Navigation } from 'swiper';
 import { serverURL } from '../../routes/router';
-import { data } from 'autoprefixer';
 import TestimonialSlide from './TestimonialSlide';
 const Testimonial = () => {
 	const [testimonials, setTestimonials] = useState([]);
@@ -19,7 +18,7 @@ const Testimonial = () => {
 			.then((data) => setTestimonials(data));
 	}, []);
 	return (
-		<section className=''>
+		<section>
 			<div className='mx-auto max-w-[1340px] px-4 py-16 sm:px-6 sm:py-24 lg:mr-0 lg:pl-8 lg:pr-0'>
 				<div className='grid grid-cols-1 gap-y-8 lg:grid-cols-3 lg:items-center lg:gap-x-16'>
 					<div className='max-w-xl text-center sm:text-left'>

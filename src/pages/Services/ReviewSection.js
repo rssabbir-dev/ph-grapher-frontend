@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { serverURL } from '../../routes/router';
 import Pagination from '../shared/Pagination/Pagination';
@@ -63,7 +64,13 @@ const ReviewSection = ({ service }) => {
 			.then((data) => {
 				if (data.acknowledged) {
 					modal.checked = false;
-					toast.success('Review posted');
+					Swal.fire({
+						position: 'top-center',
+						icon: 'success',
+						title: 'Reviewed Done!',
+						showConfirmButton: false,
+						timer: 1500,
+					});
 					reset();
 					setReloadData(reloadData + 1);
 					setBtnLoading(false);
@@ -132,10 +139,11 @@ const ReviewSection = ({ service }) => {
 									defaultValue={user?.email}
 								/>
 								<textarea
-									placeholder='Describe you feedback'
+									placeholder='Describe you feedback minimums 50 characters'
 									className='textarea textarea-bordered'
 									{...register('user_review', {
 										required: true,
+										minLength:50
 									})}
 								/>
 							</div>

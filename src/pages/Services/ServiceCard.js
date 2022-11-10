@@ -11,7 +11,7 @@ const ServiceCard = ({ service }) => {
 			<span className='absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-md border'></span>
 
 			<strong className='absolute top-4 left-0 bg-primary py-1.5 px-3 text-xs uppercase tracking-wider text-white'>
-				New
+				<span>৳</span>{price}/hour
 			</strong>
 
 			<div className='relative text-center flex flex-col justify-between h-full'>

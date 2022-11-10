@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { siteName } from '../../App';
+import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { serverURL } from '../../routes/router';
 import ReviewSection from '../Services/ReviewSection';
 import Spinner from '../shared/Spinner/Spinner';
@@ -13,7 +15,8 @@ const ServiceDetails = () => {
 	const [service, setService] = useState({});
 	const [quantity, setQuantity] = useState(1);
 	const [loading, setLoading] = useState(false);
-	
+	const {user} = useContext(AuthContext)
+
 	const { title, img, description, price } = service;
 	useEffect(() => {
 		setLoading(true);
@@ -25,6 +28,26 @@ const ServiceDetails = () => {
 				setLoading(false);
 			});
 	}, [params.id]);
+	const handleHireMe = () => {
+		if (user?.uid) {
+			Swal.fire({
+				position: 'top-center',
+				icon: 'success',
+				title: `I am your now <br/> For ${title}`,
+				showConfirmButton: false,
+				timer: 3000,
+			});
+		}
+		else {
+			Swal.fire({
+				position: 'top-center',
+				icon: 'error',
+				title: `Please Login, for hire me`,
+				showConfirmButton: true,
+				timer: 3000,
+			});
+		}
+	}
 
 	return (
 		<HelmetProvider>
@@ -122,10 +145,10 @@ const ServiceDetails = () => {
 									</div>
 									<div className='mt-8 flex'>
 										<button
-											type='submit'
+											onClick={handleHireMe}
 											className='ml-3 block rounded px-5 py-3 text-xs btn btn-primary'
 										>
-											Book Now
+											Hire Me
 										</button>
 									</div>
 								</div>

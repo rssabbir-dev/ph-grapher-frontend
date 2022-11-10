@@ -116,10 +116,11 @@ const AddService = () => {
 											</label>
 											<input
 												type='text'
-												placeholder='Service Name'
+												placeholder='minimums 15 character'
 												className='input input-bordered'
 												{...register('title', {
 													required: true,
+													minLength: 15,
 												})}
 											/>
 										</div>
@@ -187,11 +188,12 @@ const AddService = () => {
 									<div>
 										<div className='form-control space-y-3'>
 											<textarea
-												placeholder='Describe service details...'
+												placeholder='Describe service details minimums 100 character'
 												className='textarea textarea-bordered'
 												rows='8'
 												{...register('description', {
 													required: true,
+													minLength:100
 												})}
 											/>
 										</div>

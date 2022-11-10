@@ -5,6 +5,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { siteName } from '../../App';
 import registrationImg from '../../assets/images/person.jpg';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
@@ -38,7 +39,13 @@ const Registration = () => {
 		updateUserProfile(profileData)
 			.then(() => {
 				logOut().then(() => {
-					toast.success('Now you can login');
+					Swal.fire({
+						position: 'top-center',
+						icon: 'success',
+						title: 'Now You Can Login',
+						showConfirmButton: false,
+						timer: 1500,
+					});
 					navigate('/login');
 				});
 			})

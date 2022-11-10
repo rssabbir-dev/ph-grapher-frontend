@@ -161,18 +161,18 @@ const Footer = () => {
 				<div className='mt-12 border-t border-gray-800 pt-12'>
 					<div className='text-sm text-gray-300 sm:flex sm:items-center sm:justify-between'>
 						<div className='flex gap-3'>
-							<a className='hover:opacity-75' href=''>
+							<Link className='hover:opacity-75'>
 								{' '}
 								Privacy Policy{' '}
-							</a>
-							<a className='hover:opacity-75' href=''>
+							</Link>
+							<Link className='hover:opacity-75'>
 								{' '}
 								Terms & Conditions{' '}
-							</a>
-							<a className='hover:opacity-75' href=''>
+							</Link>
+							<Link className='hover:opacity-75'>
 								{' '}
 								Returns Policy{' '}
-							</a>
+							</Link>
 						</div>
 
 						<p className='mt-4 sm:mt-0'>&copy; 2022 {siteName}.</p>

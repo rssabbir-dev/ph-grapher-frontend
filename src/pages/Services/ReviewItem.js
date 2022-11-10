@@ -28,7 +28,7 @@ const ReviewItem = ({ review }) => {
 				</div>
 			</header>
 
-			<div className=''>
+			<div>
 				<p className='mt-2 text-gray-700'>{user_review}</p>
 
 				<footer className='mt-4'>
