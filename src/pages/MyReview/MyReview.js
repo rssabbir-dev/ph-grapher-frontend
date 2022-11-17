@@ -68,9 +68,9 @@ const MyReview = () => {
 					{
 						method: 'DELETE',
 						headers: {
-							authorization: `Bearer ${localStorage.getItem(
-								'ph-token'
-							)}`,
+							authorization: `Bearer ${
+								document.cookie.split('=')[1]
+							}`,
 						},
 					}
 				)
