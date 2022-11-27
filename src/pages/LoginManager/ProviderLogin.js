@@ -19,6 +19,7 @@ const ProviderLogin = () => {
 				const user = res.user;
 				toast.success('Login Success');
 				handleJwtToken(user);
+				saveUserDataInDB(user.displayName, user.email, user.photoURL,user.uid);
 				navigate(from, { replace: true });
 			})
 			.catch((err) => toast.error(err.message));
@@ -34,6 +35,18 @@ const ProviderLogin = () => {
 		});
 		const data = await response.json();
 		document.cookie = 'ph-token=' + data.token;
+	};
+	const saveUserDataInDB = (name, email, photoURL,uid) => {
+		const user = { displayName: name, email, photoURL,uid };
+		fetch(`${serverURL}/users`, {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body: JSON.stringify(user),
+		})
+			.then((res) => res.json())
+			.then((data) => {});
 	};
 	return (
 		<div className='flex justify-center'>

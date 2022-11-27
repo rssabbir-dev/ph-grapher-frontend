@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import { siteName } from '../../App';
-import { AuthContext } from '../../context/AuthProvider/AuthProvider';
-import auth from '../../firebase/firebase.config';
-import { serverURL } from '../../routes/router';
-import Spinner from '../shared/Spinner/Spinner';
+import { siteName } from '../../../App';
+import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
+import auth from '../../../firebase/firebase.config';
+import { serverURL } from '../../../routes/router';
+import Spinner from '../../shared/Spinner/Spinner';
 import MyService from './MyService';
 
 const AddService = () => {
@@ -70,7 +70,7 @@ const AddService = () => {
 	}, [user?.uid, reloadData]);
 	return (
 		<HelmetProvider>
-			<section className='min-h-screen my-10'>
+			<section className=''>
 				<Helmet>
 					<title>Add New Service - {siteName}</title>
 				</Helmet>
@@ -193,7 +193,7 @@ const AddService = () => {
 												rows='8'
 												{...register('description', {
 													required: true,
-													minLength:100
+													minLength: 100,
 												})}
 											/>
 										</div>

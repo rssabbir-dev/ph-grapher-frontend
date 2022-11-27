@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
-import logo from '../../../assets/images/logo.png'
+import logo from '../../../assets/images/logo.png';
 import { siteName } from '../../../App';
+import useAdmin from '../../../hooks/useAdmin';
 
 const Header = () => {
 	const { user, logOut } = useContext(AuthContext);
+	const [isAdmin] = useAdmin(user?.uid);
 	const handleLogout = () => {
 		logOut()
 			.then(() => {
@@ -26,9 +28,6 @@ const Header = () => {
 				<>
 					<li>
 						<Link to='/my-review'>My Review</Link>
-					</li>
-					<li>
-						<Link to='/add-service'>Add Services</Link>
 					</li>
 				</>
 			)}
@@ -64,8 +63,11 @@ const Header = () => {
 						{menuList}
 					</ul>
 				</div>
-				<Link to='/' className='normal-case text-xl font-bold flex justify-center items-center'>
-					<img className='w-10' src={logo} alt="" />
+				<Link
+					to='/'
+					className='normal-case text-xl font-bold flex justify-center items-center'
+				>
+					<img className='w-10' src={logo} alt='' />
 					<span>{siteName}</span>
 				</Link>
 			</div>
@@ -117,6 +119,13 @@ const Header = () => {
 							<li>
 								<Link to='/account'>Account</Link>
 							</li>
+							<>
+								{isAdmin && (
+									<li>
+										<Link to='/admin'>Admin Dashboard</Link>
+									</li>
+								)}
+							</>
 							<li>
 								<button onClick={handleLogout}>Logout</button>
 							</li>

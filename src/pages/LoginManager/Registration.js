@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { siteName } from '../../App';
 import registrationImg from '../../assets/images/person.jpg';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import { serverURL } from '../../routes/router';
 
 const Registration = () => {
 	const navigate = useNavigate();
@@ -25,9 +26,10 @@ const Registration = () => {
 	const handleCreateUser = (email, password, name, photoURL) => {
 		createUser(email, password)
 			.then((res) => {
-				// const user = res.user;
+				const user = res.user;
 				handleUpdateUserProfile(name, photoURL);
 				toast.success('Registration Success');
+				saveUserDataInDB(name, email, photoURL, user.uid);
 			})
 			.catch((err) => toast.error(err.message));
 	};
@@ -50,6 +52,19 @@ const Registration = () => {
 				});
 			})
 			.catch((err) => toast.error(err.message));
+	};
+
+	const saveUserDataInDB = (name, email, photoURL, uid) => {
+		const user = { displayName: name, email, photoURL, uid };
+		fetch(`${serverURL}/users`, {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body: JSON.stringify(user),
+		})
+			.then((res) => res.json())
+			.then((data) => {});
 	};
 	return (
 		<HelmetProvider>
