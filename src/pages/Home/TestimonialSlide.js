@@ -1,7 +1,8 @@
 import React from 'react';
 
 const TestimonialSlide = ({ testimonial }) => {
-	const { feedback, name, rating } = testimonial;
+	const { user_review, user_name, user_rating, user_photo } = testimonial;
+	console.log(testimonial);
 	return (
 		<blockquote className='flex h-full flex-col justify-between bg-gray-100 p-12 cursor-pointer'>
 			<div>
@@ -10,7 +11,7 @@ const TestimonialSlide = ({ testimonial }) => {
 						<svg
 							key={rate}
 							className={
-								rate < rating
+								rate < user_rating
 									? 'text-yellow-400 h-6 w-6'
 									: 'text-gray-300 h-6 w-6'
 							}
@@ -25,13 +26,18 @@ const TestimonialSlide = ({ testimonial }) => {
 
 				<div className='mt-4'>
 					<p className='mt-4 leading-relaxed text-gray-500'>
-						{feedback}
+						{user_review}
 					</p>
 				</div>
 			</div>
 
-			<footer className='mt-8 text-sm text-gray-500'>
-				&mdash; {name}
+			<footer className='mt-8 text-sm text-gray-500 flex items-center gap-2'>
+				<div className='avatar'>
+					<div className='w-10 rounded-full'>
+						<img src={user_photo} alt='' />
+					</div>
+				</div>
+				&mdash; {user_name}
 			</footer>
 		</blockquote>
 	);

@@ -16,8 +16,8 @@ import Services from '../pages/Services/Services';
 import AdminRoute from './AdminRoute';
 import PrivateRoute from './PrivateRoute';
 
-// export const serverURL = 'https://ph-grapher-backend.vercel.app';
-export const serverURL = 'http://localhost:5000';
+export const serverURL = 'https://ph-grapher-backend.vercel.app';
+// export const serverURL = 'http://localhost:5000';
 export const router = createBrowserRouter([
 	{
 		path: '/',
